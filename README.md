@@ -84,7 +84,7 @@ BOT_NAME=Sonic             # Bot display name
 | `OWNER_NUMBER` | Bot owner WhatsApp number       | Empty   |
 | `BOT_NAME`     | Bot display name                | `Sonic` |
 
-## 🔧 Development
+## Development
 
 ### Adding New Commands
 
