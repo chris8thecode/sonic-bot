@@ -27,7 +27,6 @@ The developers are not responsible for any misuse of this bot or any consequence
 - **Permission System** - Admin-only commands with proper checks
 - **Auto-Save Configuration** - Persistent settings
 - **Emoji-Rich Interface** - Beautiful, colorful responses
-- **WhatsApp Web Integration** - Uses official WhatsApp Web API
 
 ## Quick Start
 
