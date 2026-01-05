@@ -127,7 +127,6 @@ export default {
 
 ## Security & Privacy
 
-- **Local Authentication**: Uses WhatsApp Web's authentication system
 - **No Data Storage**: Messages are not stored permanently
 - **Owner-Only Commands**: Sensitive commands restricted to bot owner
 - **Permission Checks**: Proper permission validation for group commands
@@ -135,7 +134,7 @@ export default {
 > [!IMPORTANT]
 >
 > 1. **Phone Number**: Use your personal for fun WhatsApp number (not business)
-> 2. **Internet Connection**: Stable internet required for WhatsApp Web
+> 2. **Internet Connection**: Stable internet required
 > 3. **Session Persistence**: Auth session saved in `auth_session/` folder
 > 4. **Rate Limiting**: WhatsApp may rate-limit if commands are spammed
 > 5. **Privacy**: Bot respects WhatsApp's privacy settings
