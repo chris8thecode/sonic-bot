@@ -14,16 +14,16 @@ export default {
       ms < 100
         ? `${e.sonic} Sonic Speed!`
         : ms < 200
-        ? `${e.rocket} Fast!`
-        : ms < 500
-        ? `${e.bolt} Normal`
-        : "🐢 Slow";
+          ? `${e.rocket} Fast!`
+          : ms < 500
+            ? `${e.bolt} Normal`
+            : "🐢 Slow";
 
     await send.edit(
       sock,
       msg,
       sent.key,
-      `${e.ping} *Pong!* ${ms}ms\n${status}`
+      `${e.ping} *Pong!* ${ms}ms\n${status}`,
     );
   },
 };

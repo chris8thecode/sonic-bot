@@ -11,7 +11,7 @@ export default {
     try {
       const start = Date.now();
       const res = await fetch(
-        "https://speed.cloudflare.com/__down?bytes=5000000"
+        "https://speed.cloudflare.com/__down?bytes=5000000",
       );
       const buffer = await res.arrayBuffer();
       const seconds = (Date.now() - start) / 1000;
@@ -24,7 +24,7 @@ export default {
 ╭━━━ ${e.rocket} *SPEED TEST* ━━━╮
 ┃ ${e.bolt} Download: ${mbps} Mbps
 ┃ ${e.time} Latency: ${(seconds * 1000).toFixed(0)}ms
-╰━━━━━━━━━━━━━━━━━━━━╯`.trim()
+╰━━━━━━━━━━━━━━━━━━━━╯`.trim(),
       );
     } catch {
       await send.text(sock, msg, `${e.cross} Speed test failed!`);

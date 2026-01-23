@@ -11,7 +11,7 @@ const updateEnvFile = (key, value) => {
         readFileSync(ENV_PATH, "utf-8")
           .split("\n")
           .filter((l) => l.includes("="))
-          .map((l) => l.split("=").map((s) => s.trim()))
+          .map((l) => l.split("=").map((s) => s.trim())),
       )
     : {};
 
@@ -20,7 +20,7 @@ const updateEnvFile = (key, value) => {
     ENV_PATH,
     Object.entries(env)
       .map(([k, v]) => `${k}=${v}`)
-      .join("\n")
+      .join("\n"),
   );
 };
 

@@ -12,7 +12,7 @@ export default {
       msg,
       `${e.admin} *${config.botName} Owner:* ${
         owner ? `+${owner}` : "Not configured"
-      }`
+      }`,
     );
   },
 };

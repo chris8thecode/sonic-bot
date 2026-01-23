@@ -14,7 +14,7 @@ export default {
       await send.text(
         sock,
         msg,
-        `${e.ring} *Invite Link:*\nhttps://chat.whatsapp.com/${code}`
+        `${e.ring} *Invite Link:*\nhttps://chat.whatsapp.com/${code}`,
       );
     } catch {
       await send.text(sock, msg, `${e.cross} Failed to get link.`);

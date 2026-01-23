@@ -25,7 +25,7 @@ export default {
       pp
         ? { image: { url: pp }, caption: text, mentions: [target] }
         : { text, mentions: [target] },
-      { quoted: msg }
+      { quoted: msg },
     );
   },
 };

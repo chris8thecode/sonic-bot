@@ -19,7 +19,7 @@ export default {
 ┃ ${e.time} Uptime: ${uptime}
 ┃ ${e.bolt} Prefix: ${config.prefix}
 ┃ ${e.info} The fastest bot!
-╰━━━━━━━━━━━━━━━━━━━━━━╯`.trim()
+╰━━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
     );
   },
 };

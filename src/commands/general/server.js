@@ -19,7 +19,7 @@ export default {
 ┃ ${e.user} CPU: ${os.cpus().length} cores
 ┃ ${e.speed} RAM: ${format.bytes(total - free)} / ${format.bytes(total)}
 ┃ ${e.time} OS Up: ${format.uptime(os.uptime())}
-╰━━━━━━━━━━━━━━━━━━━━━━╯`.trim()
+╰━━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
     );
   },
 };

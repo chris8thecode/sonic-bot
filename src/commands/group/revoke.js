@@ -14,7 +14,7 @@ export default {
       await send.text(
         sock,
         msg,
-        `${e.check} Link revoked!\nNew: https://chat.whatsapp.com/${code}`
+        `${e.check} Link revoked!\nNew: https://chat.whatsapp.com/${code}`,
       );
     } catch {
       await send.text(sock, msg, `${e.cross} Failed to revoke.`);

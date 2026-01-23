@@ -12,12 +12,12 @@ export default {
     try {
       await sock.groupUpdateDescription(
         msg.key.remoteJid,
-        args.join(" ") || undefined
+        args.join(" ") || undefined,
       );
       await send.text(
         sock,
         msg,
-        `${e.check} Description ${args.length ? "updated" : "removed"}!`
+        `${e.check} Description ${args.length ? "updated" : "removed"}!`,
       );
     } catch {
       await send.text(sock, msg, `${e.cross} Failed.`);
