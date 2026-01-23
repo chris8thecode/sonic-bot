@@ -1,6 +1,6 @@
 import { emoji as e } from "../../config.js";
 import { jid } from "../../utils.js";
-import { checkPerms } from "./_utils.js";
+import { checkPerms, getParticipantDisplay } from "./_utils.js";
 
 export default {
   cmd: ["admins", "listadmin", "adminlist"],
@@ -11,10 +11,12 @@ export default {
     if (!meta) return;
 
     const adminList = meta.participants.filter((p) => p.admin);
+
     const text = adminList
       .map((a) => {
         const icon = a.admin === "superadmin" ? "👑" : "⭐";
-        return `${icon} @${jid.fromUser(a.id)}`;
+        const display = getParticipantDisplay(a);
+        return `${icon} @${display}`;
       })
       .join("\n");
 
@@ -24,7 +26,7 @@ export default {
         text: `╭━━━ ${e.admin} *ADMINS* ━━━╮\n${text}\n╰━━━━━━━━━━━━━━━━━━━╯`,
         mentions: adminList.map((a) => a.id),
       },
-      { quoted: msg }
+      { quoted: msg },
     );
   },
 };

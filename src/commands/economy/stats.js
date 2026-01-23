@@ -1,0 +1,26 @@
+import { emoji as e } from "../../config.js";
+import { send } from "../../utils.js";
+import { getEconomyStats } from "../../database.js";
+import { formatCoins } from "./_utils.js";
+
+export default {
+  cmd: ["economy", "ecostats", "estats"],
+  desc: "View economy statistics",
+
+  run: async (sock, msg) => {
+    const stats = getEconomyStats();
+
+    await send.text(
+      sock,
+      msg,
+      `
+╭━━━ 📊 *ECONOMY STATS* ━━━╮
+┃
+┃ ${e.user} Users: ${stats.total_users || 0}
+┃ ${e.star} Total Cash: ${formatCoins(stats.total_cash || 0)}
+┃ ${e.bolt} Total Bank: ${formatCoins(stats.total_bank || 0)}
+┃ ${e.rocket} Total Wealth: ${formatCoins(stats.total_wealth || 0)}
+╰━━━━━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
+    );
+  },
+};

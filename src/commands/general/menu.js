@@ -34,19 +34,30 @@ export default {
 ┃ ${p}owner - Bot owner
 ╰━━━━━━━━━━━━━━━━━━━━━╯
 
+╭━━━ ${e.ring} *ECONOMY* ━━━╮
+┃ ${p}balance - Check coins
+┃ ${p}daily - Daily reward
+┃ ${p}work - Work for coins
+┃ ${p}beg - Beg for coins
+┃ ${p}pay - Pay someone
+┃ ${p}gamble - Slot machine
+┃ ${p}deposit - To bank
+┃ ${p}withdraw - From bank
+┃ ${p}inventory - Your items
+┃ ${p}leaderboard - Top rich
+┃ ${p}economy - Stats
+╰━━━━━━━━━━━━━━━━━━━━━╯
+
 ╭━━━ ${e.group} *GROUP* ━━━╮
 ┃ ${p}kick / ${p}add
 ┃ ${p}promote / ${p}demote
 ┃ ${p}mute / ${p}unmute
-┃ ${p}lock / ${p}unlock
 ┃ ${p}ginfo / ${p}admins
 ┃ ${p}link / ${p}revoke
-┃ ${p}tagall / ${p}setname
-┃ ${p}setdesc / ${p}ephemeral
-┃ ${p}join / ${p}leave
+┃ ${p}tagall / ${p}leave
 ╰━━━━━━━━━━━━━━━━━━━━━╯
 
-${e.rocket} *Gotta go fast!* ${e.sonic}`.trim()
+${e.rocket} *Gotta go fast!* ${e.sonic}`.trim(),
     );
   },
 };

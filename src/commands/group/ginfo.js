@@ -1,5 +1,5 @@
 import { emoji as e } from "../../config.js";
-import { send } from "../../utils.js";
+import { send, jid } from "../../utils.js";
 import { checkPerms } from "./_utils.js";
 
 export default {
@@ -13,6 +13,12 @@ export default {
     const admins = meta.participants.filter((p) => p.admin).length;
     const created = new Date(meta.creation * 1000).toLocaleDateString();
 
+    const ownerDisplay = meta.ownerPn
+      ? jid.fromUser(meta.ownerPn)
+      : meta.owner
+        ? jid.fromUser(meta.owner)
+        : "Unknown";
+
     await send.text(
       sock,
       msg,
@@ -21,9 +27,10 @@ export default {
 ┃ ${e.star} Name: ${meta.subject}
 ┃ ${e.user} Members: ${meta.participants.length}
 ┃ ${e.admin} Admins: ${admins}
+┃ ${e.admin} Owner: +${ownerDisplay}
 ┃ ${e.time} Created: ${created}
 ┃ ${e.info} Desc: ${meta.desc || "None"}
-╰━━━━━━━━━━━━━━━━━━━━━━━━━╯`.trim()
+╰━━━━━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
     );
   },
 };

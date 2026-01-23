@@ -1,9 +1,10 @@
-import makeWASocket, {
+import {
+  makeWASocket,
   useMultiFileAuthState,
   makeCacheableSignalKeyStore,
   fetchLatestBaileysVersion,
   DisconnectReason,
-} from "baileys";
+} from "@whiskeysockets/baileys";
 import NodeCache from "@cacheable/node-cache";
 import pino from "pino";
 import readline from "readline";
@@ -34,6 +35,9 @@ export const startSocket = async () => {
     },
     msgRetryCounterCache: msgRetryCache,
     generateHighQualityLinkPreview: true,
+
+    markOnlineOnConnect: false,
+
     getMessage: async () => undefined,
   });
 
@@ -64,21 +68,33 @@ export const startSocket = async () => {
       if (connection === "open") {
         rl.close();
         console.log(`
-  ╔══════════════════════════════════╗
-  ║  🦔 ${config.botName.toUpperCase()} CONNECTED! 💨
-  ║  Prefix: ${config.prefix}
-  ║  Owner: ${getOwner() || "Not set"}
-  ╚══════════════════════════════════╝`);
+╔══════════════════════════════════╗
+║  🦔 ${config.botName.toUpperCase()} CONNECTED! 💨
+║  Prefix: ${config.prefix}
+║  Owner: ${getOwner() || "Not set"}
+╚══════════════════════════════════╝`);
       }
     }
 
     if (events["creds.update"]) await saveCreds();
 
+    if (events["lid-mapping.update"]) {
+      // Store LID<->PN mappings if needed
+      // console.log('LID mapping update:', events['lid-mapping.update'])
+    }
+
     if (events["messages.upsert"]) {
       const { messages, type } = events["messages.upsert"];
       if (type !== "notify") return;
-      for (const msg of messages)
+
+      for (const msg of messages) {
         await handleMessage(sock, msg).catch(console.error);
+      }
+    }
+
+    if (events["group-participants.update"]) {
+      // const { id, participants, action } = events['group-participants.update']
+      // action: 'add' | 'remove' | 'promote' | 'demote'
     }
   });
 

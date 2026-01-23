@@ -1,13 +1,18 @@
 import { emoji as e } from "../../config.js";
 import { jid, send, getTarget } from "../../utils.js";
 
+const getAdminIds = (metadata) => {
+  return metadata.participants.filter((p) => p.admin).map((p) => p.id);
+};
+
 export const checkPerms = async (
   sock,
   msg,
-  { admin = false, botAdmin = false } = {}
+  { admin = false, botAdmin = false } = {},
 ) => {
   const groupJid = msg.key.remoteJid;
-  const sender = msg.key.participant || msg.key.remoteJid;
+
+  const sender = jid.getSender(msg) || msg.key.participant || msg.key.remoteJid;
 
   if (!jid.isGroup(groupJid)) {
     await send.text(sock, msg, `${e.cross} Group command only!`);
@@ -15,17 +20,36 @@ export const checkPerms = async (
   }
 
   const metadata = await sock.groupMetadata(groupJid);
-  const admins = metadata.participants.filter((p) => p.admin).map((p) => p.id);
-  const botJid = jid.fromUser(sock.user?.id) + "@s.whatsapp.net";
+  const adminIds = getAdminIds(metadata);
 
-  if (admin && !admins.includes(sender)) {
-    await send.text(sock, msg, `${e.cross} Admin only!`);
-    return null;
+  const botJid = sock.user?.id;
+  const botNormalized = jid.normalize(botJid);
+
+  if (admin) {
+    const senderNormalized = jid.normalize(sender);
+    const isAdmin = adminIds.some(
+      (id) =>
+        jid.normalize(id) === senderNormalized ||
+        jid.fromUser(id) === jid.fromUser(sender),
+    );
+
+    if (!isAdmin) {
+      await send.text(sock, msg, `${e.cross} Admin only!`);
+      return null;
+    }
   }
 
-  if (botAdmin && !admins.includes(botJid)) {
-    await send.text(sock, msg, `${e.cross} I need admin rights!`);
-    return null;
+  if (botAdmin) {
+    const isBotAdmin = adminIds.some(
+      (id) =>
+        jid.normalize(id) === botNormalized ||
+        jid.fromUser(id) === jid.fromUser(botJid),
+    );
+
+    if (!isBotAdmin) {
+      await send.text(sock, msg, `${e.cross} I need admin rights!`);
+      return null;
+    }
   }
 
   return metadata;
@@ -38,6 +62,13 @@ export const requireTarget = async (sock, msg) => {
     return null;
   }
   return target;
+};
+
+export const getParticipantDisplay = (participant) => {
+  if (participant.phoneNumber) {
+    return jid.fromUser(participant.phoneNumber);
+  }
+  return jid.fromUser(participant.id);
 };
 
 export const participantAction =
@@ -61,7 +92,7 @@ export const participantAction =
       const [result] = await sock.groupParticipantsUpdate(
         msg.key.remoteJid,
         [target],
-        action
+        action,
       );
 
       if (result.status === "200") {
@@ -69,24 +100,20 @@ export const participantAction =
           sock,
           msg,
           `${e.check} ${successMsg} @${jid.fromUser(target)}`,
-          [target]
+          [target],
         );
       } else {
         await send.text(
           sock,
           msg,
-          `${e.cross} Failed! Error: ${result.status}`
+          `${e.cross} Failed! Error: ${result.status}`,
         );
       }
     } catch (err) {
       await send.text(
         sock,
         msg,
-        `${e.cross} ${
-          err.message?.includes("403")
-            ? "Privacy settings prevent this."
-            : "Failed."
-        }`
+        `${e.cross} ${err.message?.includes("403") ? "Privacy settings prevent this." : "Failed."}`,
       );
     }
   };

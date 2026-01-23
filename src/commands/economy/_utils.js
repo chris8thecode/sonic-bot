@@ -1,0 +1,178 @@
+import { emoji as e } from "../../config.js";
+import { send } from "../../utils.js";
+import {
+  checkCommandCooldown,
+  formatCooldown,
+  COOLDOWN,
+} from "../../cooldown.js";
+
+/**
+ * Jobs for work command
+ */
+export const JOBS = [
+  {
+    name: "Programmer",
+    emoji: "💻",
+    min: 50,
+    max: 150,
+    messages: [
+      "debugged a nasty bug",
+      "deployed a new feature",
+      "fixed a production issue",
+      "reviewed some pull requests",
+      "wrote clean code",
+    ],
+  },
+  {
+    name: "Chef",
+    emoji: "👨‍🍳",
+    min: 30,
+    max: 100,
+    messages: [
+      "cooked a delicious meal",
+      "prepared a five-star dish",
+      "catered a wedding",
+      "created a new recipe",
+      "served hungry customers",
+    ],
+  },
+  {
+    name: "Driver",
+    emoji: "🚗",
+    min: 25,
+    max: 80,
+    messages: [
+      "delivered packages on time",
+      "completed a long-distance trip",
+      "drove passengers safely",
+      "finished all deliveries early",
+      "navigated through traffic",
+    ],
+  },
+  {
+    name: "Doctor",
+    emoji: "👨‍⚕️",
+    min: 100,
+    max: 200,
+    messages: [
+      "saved a patient's life",
+      "performed a successful surgery",
+      "diagnosed a rare condition",
+      "helped patients recover",
+      "worked a double shift",
+    ],
+  },
+  {
+    name: "Artist",
+    emoji: "🎨",
+    min: 20,
+    max: 120,
+    messages: [
+      "sold a painting",
+      "completed a commission",
+      "designed a logo",
+      "created digital art",
+      "drew portraits",
+    ],
+  },
+  {
+    name: "Musician",
+    emoji: "🎵",
+    min: 30,
+    max: 110,
+    messages: [
+      "performed at a concert",
+      "recorded a new track",
+      "taught music lessons",
+      "played at a wedding",
+      "busked on the street",
+    ],
+  },
+  {
+    name: "Streamer",
+    emoji: "🎮",
+    min: 15,
+    max: 90,
+    messages: [
+      "got a bunch of donations",
+      "gained new subscribers",
+      "went viral",
+      "hosted a charity stream",
+      "beat a hard game",
+    ],
+  },
+  {
+    name: "Farmer",
+    emoji: "🌾",
+    min: 35,
+    max: 85,
+    messages: [
+      "harvested the crops",
+      "sold produce at the market",
+      "milked the cows",
+      "collected fresh eggs",
+      "planted new seeds",
+    ],
+  },
+  {
+    name: "Mechanic",
+    emoji: "🔧",
+    min: 40,
+    max: 95,
+    messages: [
+      "fixed a broken engine",
+      "replaced worn brakes",
+      "tuned up a classic car",
+      "changed oil for customers",
+      "repaired a transmission",
+    ],
+  },
+  {
+    name: "Sonic Impersonator",
+    emoji: "🦔",
+    min: 100,
+    max: 250,
+    messages: [
+      "ran really fast at a birthday party",
+      "collected golden rings",
+      "defeated Dr. Eggman",
+      "saved the world... again",
+      "went supersonic",
+    ],
+  },
+];
+
+/**
+ * Random number between min and max (inclusive)
+ */
+export const random = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+/**
+ * Random array element
+ */
+export const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+/**
+ * Format coin amount with emoji
+ */
+export const formatCoins = (amount) => `${e.ring} ${amount.toLocaleString()}`;
+
+/**
+ * Check economy command cooldown wrapper
+ */
+export const checkEconCooldown = async (sock, msg, command, duration) => {
+  const sender = msg.key.participant || msg.key.remoteJid;
+  const cd = checkCommandCooldown(sender, command, duration);
+
+  if (!cd.allowed) {
+    await send.text(
+      sock,
+      msg,
+      `${e.time} You can use this command again in *${formatCooldown(cd.remaining)}*`,
+    );
+    return false;
+  }
+
+  return true;
+};

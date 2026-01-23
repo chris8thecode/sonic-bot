@@ -1,6 +1,8 @@
 import { config } from "./config.js";
 import { commands } from "./commands/index.js";
 import { getText, send, jid } from "./utils.js";
+import { checkGlobalCooldown, formatCooldown } from "./cooldown.js";
+import { emoji as e } from "./config.js";
 
 export const handleMessage = async (sock, msg) => {
   if (!msg.message || msg.key.remoteJid === "status@broadcast") return;
@@ -22,12 +24,31 @@ export const handleMessage = async (sock, msg) => {
 
   if (!cmd) return;
 
-  // Uncomment for debugging only
-  // console.log(
-  //   `📩 ${cmdName} | ${
-  //     (msg.key.participant || msg.key.remoteJid).split("@")[0]
-  //   }`
-  // );
+  const sender = jid.getSender(msg) || msg.key.participant || msg.key.remoteJid;
+
+  const cooldown = checkGlobalCooldown(sender);
+
+  if (!cooldown.allowed) {
+    switch (cooldown.action) {
+      case "warn":
+        await send.text(
+          sock,
+          msg,
+          `${e.time} Slow down! Wait *${formatCooldown(cooldown.remaining)}* before using another command.`,
+        );
+        return;
+
+      case "react":
+        await send.react(sock, msg, "⏳");
+        return;
+
+      case "ignore":
+        return;
+    }
+  }
+
+  // Uncomment for debugging
+  // console.log(`📩 ${cmdName} | ${jid.fromUser(sender)}`)
 
   try {
     await cmd.run(sock, msg, args);
