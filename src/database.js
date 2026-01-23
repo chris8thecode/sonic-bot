@@ -76,21 +76,11 @@ const statements = {
   deleteEmptyItems: db.prepare(`DELETE FROM inventory WHERE quantity <= 0`),
 };
 
-/**
- * Clean user ID - extract just the number
- * Works with both LID and PN formats
- * Examples:
- *   1234567890@s.whatsapp.net -> 1234567890
- *   1234567890:123@s.whatsapp.net -> 1234567890
- *   ABC123@lid -> ABC123
- */
 const cleanId = (userId) => {
   if (!userId) return "";
 
-  // Remove @s.whatsapp.net, @lid, etc.
   let clean = userId.replace(/@.*/, "");
 
-  // Remove device ID suffix (e.g., :123)
   clean = clean.replace(/:\d+$/, "");
 
   return clean;
@@ -227,9 +217,6 @@ export const hasItem = (userId, itemName, quantity = 1) => {
   return item && item.quantity >= quantity;
 };
 
-/**
- * Bank operations
- */
 export const deposit = (userId, amount) => {
   const id = cleanId(userId);
   const user = getUser(id);
@@ -262,9 +249,6 @@ export const withdraw = (userId, amount) => {
   return { success: true, balance: updated.balance, bank: updated.bank };
 };
 
-/**
- * Economy stats
- */
 export const getEconomyStats = () => {
   return db
     .prepare(
@@ -280,7 +264,6 @@ export const getEconomyStats = () => {
     .get();
 };
 
-// Cleanup on exit
 process.on("exit", () => db.close());
 process.on("SIGINT", () => {
   db.close();
