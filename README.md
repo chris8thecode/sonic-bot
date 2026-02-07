@@ -1,6 +1,6 @@
 <h1 align="center">Sonic</h1>
 
-![Sonic-bot](https://files.catbox.moe/brh0oo.webp)
+![Sonic-bot](https://files.catbox.moe/zbwngg.jpeg)
 
 Sonic WhatsApp bot streamlines group management, enhances user engagement and delivers instant responses at lightning speed. This professional grade bot transforms WhatsApp into a powerful platform for community management and user interaction.
 
