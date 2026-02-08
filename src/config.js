@@ -29,7 +29,7 @@ export const config = Object.freeze({
   ownerNumber: process.env.OWNER_NUMBER || "",
   botName: process.env.BOT_NAME || "Sonic",
   version: "1.0.0",
-  authDir: "auth_session",
+  authDir: "auth_session.db",
 });
 
 export const emoji = Object.freeze({

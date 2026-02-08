@@ -1,10 +1,10 @@
 import {
   makeWASocket,
-  useMultiFileAuthState,
   makeCacheableSignalKeyStore,
   fetchLatestBaileysVersion,
   DisconnectReason,
-} from "@whiskeysockets/baileys";
+} from "baileys";
+import { useSqliteAuthState } from "./use-sqlite-file-auth-state.js";
 import NodeCache from "@cacheable/node-cache";
 import pino from "pino";
 import readline from "readline";
@@ -21,7 +21,7 @@ const rl = readline.createInterface({
 const ask = (q) => new Promise((r) => rl.question(q, r));
 
 export const startSocket = async () => {
-  const { state, saveCreds } = await useMultiFileAuthState(config.authDir);
+  const { state, saveCreds } = await useSqliteAuthState(config.authDir);
   const { version } = await fetchLatestBaileysVersion();
 
   console.log(`🔌 WA v${version.join(".")}`);

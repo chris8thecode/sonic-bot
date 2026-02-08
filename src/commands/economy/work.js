@@ -17,7 +17,6 @@ export default {
   run: async (sock, msg) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    // Check work cooldown (1 minute)
     if (!(await checkEconCooldown(sock, msg, "work", COOLDOWN.WORK))) return;
 
     const job = randomFrom(JOBS);

@@ -43,10 +43,9 @@ export default {
   run: async (sock, msg) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    // 30 second cooldown
     if (!(await checkEconCooldown(sock, msg, "beg", 30000))) return;
 
-    const success = random(1, 100) <= 60; // 60% success rate
+    const success = random(1, 100) <= 60;
 
     if (success) {
       const earned = random(1, 50);

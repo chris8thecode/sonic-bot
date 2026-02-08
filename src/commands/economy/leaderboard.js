@@ -19,11 +19,15 @@ export default {
       .map((user, i) => {
         const medal = medals[i] || `${i + 1}.`;
         const total = user.balance + user.bank;
-        return `┃ ${medal} +${user.id}: ${formatCoins(total)}`;
+        return `┃ ${medal} @${user.id}: ${formatCoins(total)}`;
       })
       .join("\n");
 
-    await send.text(
+    const mentions = top.map((user) =>
+      user.id.includes("@") ? user.id : user.id + "@s.whatsapp.net",
+    );
+
+    await send.mention(
       sock,
       msg,
       `
@@ -32,6 +36,7 @@ export default {
 ${list}
 ┃
 ╰━━━━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
+      mentions,
     );
   },
 };

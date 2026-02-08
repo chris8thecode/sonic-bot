@@ -13,18 +13,33 @@ export default {
     const num = jid.fromUser(target);
     const isSelf = target === (msg.key.participant || msg.key.remoteJid);
 
-    await send.text(
-      sock,
-      msg,
-      `
+    if (isSelf) {
+      await send.text(
+        sock,
+        msg,
+        `
 ╭━━━ ${e.ring} *WALLET* ━━━╮
-┃ ${e.user} ${isSelf ? "Your" : `@${num}'s`} Balance
+┃ ${e.user} Your Balance
 ┃
 ┃ ${e.star} Cash: ${formatCoins(user.balance)}
 ┃ ${e.bolt} Bank: ${formatCoins(user.bank)}
 ┃ ${e.rocket} Total: ${formatCoins(user.balance + user.bank)}
 ╰━━━━━━━━━━━━━━━━━━━╯`.trim(),
-      isSelf ? undefined : [target],
-    );
+      );
+    } else {
+      await send.mention(
+        sock,
+        msg,
+        `
+╭━━━ ${e.ring} *WALLET* ━━━╮
+┃ ${e.user} @${num}'s Balance
+┃
+┃ ${e.star} Cash: ${formatCoins(user.balance)}
+┃ ${e.bolt} Bank: ${formatCoins(user.bank)}
+┃ ${e.rocket} Total: ${formatCoins(user.balance + user.bank)}
+╰━━━━━━━━━━━━━━━━━━━╯`.trim(),
+        [target],
+      );
+    }
   },
 };

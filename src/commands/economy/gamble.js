@@ -2,7 +2,6 @@ import { emoji as e } from "../../config.js";
 import { send } from "../../utils.js";
 import { getUser, addCoins, removeCoins } from "../../database.js";
 import { random, formatCoins, checkEconCooldown } from "./_utils.js";
-import { COOLDOWN } from "../../cooldown.js";
 
 export default {
   cmd: ["gamble", "bet", "slot"],
@@ -11,7 +10,6 @@ export default {
   run: async (sock, msg, args) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    // 10 second cooldown
     if (!(await checkEconCooldown(sock, msg, "gamble", 10000))) return;
 
     const user = getUser(sender);

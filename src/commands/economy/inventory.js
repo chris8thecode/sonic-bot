@@ -24,15 +24,29 @@ export default {
       .map((i) => `┃ • ${i.item_name} x${i.quantity}`)
       .join("\n");
 
-    await send.text(
-      sock,
-      msg,
-      `
+    if (isSelf) {
+      await send.text(
+        sock,
+        msg,
+        `
 ╭━━━ 🎒 *INVENTORY* ━━━╮
-┃ ${e.user} ${isSelf ? "Your" : `@${num}'s`} items:
+┃ ${e.user} Your items:
 ┃
 ${items}
 ╰━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
-    );
+      );
+    } else {
+      await send.mention(
+        sock,
+        msg,
+        `
+╭━━━ 🎒 *INVENTORY* ━━━╮
+┃ ${e.user} @${num}'s items:
+┃
+${items}
+╰━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
+        [target],
+      );
+    }
   },
 };

@@ -11,7 +11,6 @@ export default {
   run: async (sock, msg, args) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    // Check pay cooldown (10 seconds)
     if (!(await checkEconCooldown(sock, msg, "pay", COOLDOWN.PAY))) return;
 
     const target = getTarget(msg);
