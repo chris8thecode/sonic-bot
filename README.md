@@ -62,7 +62,7 @@ The developers are not responsible for any misuse of this bot or any consequence
 
 5. **Connect WhatsApp**
    - The bot will prompt for your phone number
-   - Enter your number with country code (e.g., 279678891)
+   - Enter your number with country code (e.g., 27967889111)
    - Check your phone for the pairing code
    - Enter the pairing code when prompted
 
@@ -135,7 +135,7 @@ export default {
 >
 > 1. **Phone Number**: Use your personal for fun WhatsApp number (not business)
 > 2. **Internet Connection**: Stable internet required
-> 3. **Session Persistence**: Auth session saved in `auth_session/` folder
+> 3. **Session Persistence**: Auth session saved in `auth_session.db` file
 > 4. **Rate Limiting**: WhatsApp may rate-limit if commands are spammed
 > 5. **Privacy**: Bot respects WhatsApp's privacy settings
 
@@ -151,7 +151,7 @@ export default {
 
 **Authentication fails**
 
-- Delete `auth_session/` folder
+- Delete `auth_session.db` and other files named `auth_session`
 - Restart bot and re-authenticate
 - Check phone number format (include country code)
 
