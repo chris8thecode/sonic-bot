@@ -6,17 +6,17 @@ Sonic WhatsApp bot streamlines group management, enhances user engagement and de
 
 ## Disclaimer
 
-**IMPORTANT**: This bot is provided for educational and personal use purposes only. Please ensure you:
+**IMPORTANT**: Sonic is provided for educational and personal use purposes only. Please ensure you:
 
-- **Use responsibly**: Do not spam, harass, or send unwanted messages to users
+- **Use responsibly**: Do not spam, harass or send unwanted messages to users
 - **Respect privacy**: Handle user data with care and respect their privacy
-- **No commercial use**: This bot is not intended for commercial purposes without proper authorization
+- **No commercial use**: Sonic is not intended for commercial purposes without proper authorization
 - **Legal compliance**: Ensure your use complies with local laws and regulations
 
-The developers are not responsible for any misuse of this bot or any consequences arising from its use. Users are solely responsible for their actions and must ensure they have proper consent before adding the bot to groups or sending messages.
+The developers are not responsible for any misuse of sonic or any consequences arising from its use. Users are solely responsible for their actions and must ensure they have proper consent before adding sonic to groups or sending messages.
 
 > [!WARNING] 
-> WhatsApp may suspend or ban accounts that violate their terms of service. Use this bot at your own risk.
+> WhatsApp may suspend or ban accounts that violate their terms of service. Use sonic at your own risk.
 
 ## Features
 
@@ -32,7 +32,7 @@ The developers are not responsible for any misuse of this bot or any consequence
 
 ### Installation
 
-1. **Clone or download the bot**
+1. **Clone or download sonic**
 
    ```bash
    cd sonic-bot
@@ -47,12 +47,12 @@ The developers are not responsible for any misuse of this bot or any consequence
 3. **Configure environment**
 
    ```bash
-   # The bot will create a .env file automatically
+   # Sonic will create a .env file automatically
    # Or create one manually with:
    touch .env
    ```
 
-4. **Run the bot**
+4. **Run sonic**
 
    ```bash
    npm start
@@ -61,19 +61,19 @@ The developers are not responsible for any misuse of this bot or any consequence
    ```
 
 5. **Connect WhatsApp**
-   - The bot will prompt for your phone number
-   - Enter your number with country code (e.g., 27967889111)
+   - Sonic will prompt for your phone number
+   - Enter your number with country code (e.g., 27724913058)
    - Check your phone for the pairing code
    - Enter the pairing code when prompted
 
 ## Configuration
 
-The bot uses a `.env` file for configuration. It will be created automatically, or you can create it manually:
+Sonic uses a `.env` file for configuration. It will be created automatically or you can create it manually:
 
 ```env
-# Bot Configuration
+# Sonic Configuration
 PREFIX=!                    # Command prefix
-OWNER_NUMBER=279678891   # Bot owner number not necessary to be filled will be auto filled once paired
+OWNER_NUMBER=27724913058   # Bot owner number not necessary to be filled will be auto filled once paired
 BOT_NAME=Sonic             # Bot display name
 ```
 
@@ -184,7 +184,7 @@ export default {
 
 ## Support
 
-For issues, questions, or contributions:
+For issues, questions or contributions:
 
 - Create an issue in the repository
 - Check existing documentation
@@ -192,6 +192,6 @@ For issues, questions, or contributions:
 
 ---
 
-**Made with ❤️ and lots of ⚡ by Xodobyte**
+**Made with ❤️ by Xodobyte**
 
 _Gotta go fast!_ 🦔💨
