@@ -2,6 +2,12 @@
 
 <p align="center"> <img src="https://files.catbox.moe/zbwngg.jpeg" alt="Sonic-bot" /> </p>
 
+<p align="center">
+  <a href="https://deepwiki.com/xodo2fast4u/sonic-bot">
+    <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
+  </a>
+</p>
+
 Sonic WhatsApp bot streamlines group management, enhances user engagement and delivers instant responses at lightning speed. This professional grade bot transforms WhatsApp into a powerful platform for community management and user interaction.
 
 ## Disclaimer
