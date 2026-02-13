@@ -11,6 +11,11 @@ export const handleMessage = async (sock, msg) => {
   const chatNumber = jid.fromUser(msg.key.remoteJid);
   const isSelfChat = botNumber === chatNumber;
 
+  /*
+   * Self-sent messages are ignored unless they're in the bot's own chat because
+   * we want to allow the owner to test commands privately without triggering
+   * responses in other conversations.
+   */
   if (msg.key.fromMe && !isSelfChat) return;
 
   const text = getText(msg);
@@ -28,6 +33,11 @@ export const handleMessage = async (sock, msg) => {
 
   const cooldown = checkGlobalCooldown(sender);
 
+  /*
+   * Different cooldown actions provide flexibility in spam control: warnings inform
+   * users explicitly, reactions give subtle feedback, and ignoring prevents any response
+   * to reduce spam visibility.
+   */
   if (!cooldown.allowed) {
     switch (cooldown.action) {
       case "warn":

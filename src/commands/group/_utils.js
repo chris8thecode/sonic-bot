@@ -71,6 +71,10 @@ export const getParticipantDisplay = (participant) => {
   return jid.fromUser(participant.id);
 };
 
+/*
+ * Factory function creates similar command handlers with different actions,
+ * reducing code duplication across kick, promote, demote, and add commands.
+ */
 export const participantAction =
   (action, successMsg) => async (sock, msg, args) => {
     const meta = await checkPerms(sock, msg, { admin: true, botAdmin: true });
@@ -80,6 +84,11 @@ export const participantAction =
     if (action === "add") {
       if (!args[0]) return send.text(sock, msg, `${e.warn} Provide a number!`);
       target = jid.toUser(args[0]);
+
+      /*
+       * onWhatsApp check prevents attempting to add non-existent numbers which
+       * would fail anyway but waste API calls and confuse users with generic errors.
+       */
       const [check] = await sock.onWhatsApp(target).catch(() => []);
       if (!check?.exists)
         return send.text(sock, msg, `${e.cross} Not on WhatsApp!`);
@@ -110,6 +119,10 @@ export const participantAction =
         );
       }
     } catch (err) {
+      /*
+       * Generic "Failed" messages leave users confused about whether it's a bug
+       * or their contact's privacy settings, so we check for 403 to clarify.
+       */
       await send.text(
         sock,
         msg,
@@ -118,6 +131,10 @@ export const participantAction =
     }
   };
 
+/*
+ * Factory function creates similar setting toggle handlers with different settings,
+ * reducing code duplication across lock, unlock, and other group setting commands.
+ */
 export const settingAction = (setting, successMsg) => async (sock, msg) => {
   if (!(await checkPerms(sock, msg, { admin: true, botAdmin: true }))) return;
 

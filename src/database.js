@@ -48,9 +48,6 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_inventory_user ON inventory(user_id);
 `);
 
-/**
- * Prepared statements
- */
 const statements = {
   getUser: db.prepare(`SELECT * FROM users WHERE id = ?`),
   createUser: db.prepare(`INSERT OR IGNORE INTO users (id) VALUES (?)`),
@@ -76,6 +73,10 @@ const statements = {
   deleteEmptyItems: db.prepare(`DELETE FROM inventory WHERE quantity <= 0`),
 };
 
+/*
+ * WhatsApp changes JID formats between LID and standard at any time so
+ * we normalize to just the phone number to prevent duplicate user records.
+ */
 const cleanId = (userId) => {
   if (!userId) return "";
 
@@ -86,9 +87,6 @@ const cleanId = (userId) => {
   return clean;
 };
 
-/**
- * Get user data
- */
 export const getUser = (userId) => {
   const id = cleanId(userId);
   if (!id) return null;
@@ -105,9 +103,6 @@ export const getUser = (userId) => {
   };
 };
 
-/**
- * Add coins to user
- */
 export const addCoins = (userId, amount) => {
   const id = cleanId(userId);
   statements.createUser.run(id);
@@ -125,9 +120,6 @@ export const addCoins = (userId, amount) => {
   return getUser(id).balance;
 };
 
-/**
- * Remove coins from user
- */
 export const removeCoins = (userId, amount) => {
   const id = cleanId(userId);
   const user = getUser(id);
@@ -140,9 +132,6 @@ export const removeCoins = (userId, amount) => {
   return getUser(id).balance;
 };
 
-/**
- * Set user balance
- */
 export const setBalance = (userId, amount) => {
   const id = cleanId(userId);
   statements.createUser.run(id);
@@ -150,9 +139,6 @@ export const setBalance = (userId, amount) => {
   return amount;
 };
 
-/**
- * Transfer coins
- */
 export const transferCoins = (fromId, toId, amount) => {
   const from = cleanId(fromId);
   const to = cleanId(toId);
@@ -178,9 +164,6 @@ export const transferCoins = (fromId, toId, amount) => {
   };
 };
 
-/**
- * Get leaderboard
- */
 export const getLeaderboard = (limit = 10) => {
   return statements.getLeaderboard.all(limit).map((user) => ({
     id: user.id,
@@ -190,9 +173,6 @@ export const getLeaderboard = (limit = 10) => {
   }));
 };
 
-/**
- * Inventory operations
- */
 export const getInventory = (userId) => {
   const id = cleanId(userId);
   return statements.getInventory.all(id);
@@ -204,6 +184,10 @@ export const addItem = (userId, itemName, quantity = 1) => {
   statements.addItem.run(id, itemName, quantity);
 };
 
+/*
+ * Empty items are deleted separately after removal to maintain referential
+ * integrity and avoid constraint violations during the quantity update.
+ */
 export const removeItem = (userId, itemName, quantity = 1) => {
   const id = cleanId(userId);
   statements.removeItem.run(quantity, id, itemName);
@@ -264,6 +248,10 @@ export const getEconomyStats = () => {
     .get();
 };
 
+/*
+ * Database connections must be explicitly closed on process termination to flush
+ * WAL checkpoints and prevent potential corruption from abrupt shutdowns.
+ */
 process.on("exit", () => db.close());
 process.on("SIGINT", () => {
   db.close();

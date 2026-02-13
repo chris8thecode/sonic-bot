@@ -11,6 +11,12 @@ export const jid = {
 
   isLID: (jid) => jid?.endsWith("@lid") ?? false,
 
+  /*
+   * Determine the sender of a message. In groups, the participant field holds the sender.
+   * LIDs sometimes provide an alternative JID (participantAlt/remoteJidAlt) which we use
+   * as a fallback to maintain consistency across different message sources.
+   */
+
   getSender: (msg) => {
     const key = msg.key;
 
@@ -47,6 +53,12 @@ export const getText = (msg) => {
     ""
   );
 };
+
+/*
+ * Extract the target JID for an interactive message: the mentioned user, or the sender
+ * of the quoted message. For quoted LIDs, we check the alternative participant field
+ * to handle cases where the original JID format differs.
+ */
 
 export const getTarget = (msg) => {
   const ctx = msg.message?.extendedTextMessage?.contextInfo;
