@@ -1,14 +1,13 @@
 import { config, emoji as e } from "../../config.js";
 import { format, send } from "../../utils.js";
-
-const startTime = Date.now();
+import { state } from "../../state.js";
 
 export default {
   cmd: ["info", "about", "botinfo"],
   desc: "Bot information",
 
   run: async (sock, msg) => {
-    const uptime = format.uptime((Date.now() - startTime) / 1000);
+    const uptime = format.uptime((Date.now() - state.startTime) / 1000);
 
     await send.text(
       sock,
