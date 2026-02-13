@@ -2,8 +2,6 @@ import { config, emoji as e } from "../../config.js";
 import { format, send } from "../../utils.js";
 import { state } from "../../state.js";
 
-const startTime = Date.now();
-
 export default {
   cmd: ["menu", "help", "start", "commands"],
   desc: "Show bot menu",
@@ -56,6 +54,9 @@ export default {
 ┃ ${p}ginfo / ${p}admins
 ┃ ${p}link / ${p}revoke
 ┃ ${p}tagall / ${p}leave
+┃ ${p}lock / ${p}unlock
+┃ ${p}setname / ${p}setdesc
+┃ ${p}ephemeral / ${p}join
 ╰━━━━━━━━━━━━━━━━━━━━━╯
 
 ${e.rocket} *Gotta go fast!* ${e.sonic}`.trim(),
