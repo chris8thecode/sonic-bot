@@ -1,5 +1,5 @@
-import { emoji as e } from "../../config.js";
-import { format, send } from "../../utils.js";
+import { emoji as e } from "../../config/config.js";
+import { format, send } from "../../utils/utils.js";
 import os from "os";
 
 export default {

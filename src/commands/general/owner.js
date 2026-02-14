@@ -1,5 +1,5 @@
-import { config, emoji as e, getOwner } from "../../config.js";
-import { send } from "../../utils.js";
+import { config, emoji as e, getOwner } from "../../config/config.js";
+import { send } from "../../utils/utils.js";
 
 export default {
   cmd: ["owner", "creator", "dev"],

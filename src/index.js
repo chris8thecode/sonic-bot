@@ -1,5 +1,5 @@
-import { startSocket } from "./socket.js";
-import { config } from "./config.js";
+import { startSocket } from "./core/socket.js";
+import { config } from "./config/config.js";
 
 console.log(`
 ╔═════════════════════════════════════╗

@@ -1,5 +1,5 @@
-import { emoji as e } from "../../config.js";
-import { jid, send } from "../../utils.js";
+import { emoji as e } from "../../config/config.js";
+import { jid, send } from "../../utils/utils.js";
 
 export default {
   cmd: ["leave", "bye"],

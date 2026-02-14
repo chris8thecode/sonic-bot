@@ -1,8 +1,7 @@
-import { config } from "./config.js";
-import { commands } from "./commands/index.js";
-import { getText, send, jid } from "./utils.js";
-import { checkGlobalCooldown, formatCooldown } from "./cooldown.js";
-import { emoji as e } from "./config.js";
+import { config, emoji as e } from "../config/config.js";
+import { commands } from "../commands/index.js";
+import { getText, send, jid } from "../utils/utils.js";
+import { checkGlobalCooldown, formatCooldown } from "../utils/cooldown.js";
 
 export const handleMessage = async (sock, msg) => {
   if (!msg.message || msg.key.remoteJid === "status@broadcast") return;

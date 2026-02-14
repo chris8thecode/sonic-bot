@@ -1,6 +1,6 @@
-import { emoji as e } from "../../config.js";
-import { send, getTarget, jid } from "../../utils.js";
-import { getUser } from "../../database.js";
+import { emoji as e } from "../../config/config.js";
+import { send, getTarget, jid } from "../../utils/utils.js";
+import { getUser } from "../../database/database.js";
 import { formatCoins } from "./_utils.js";
 
 export default {

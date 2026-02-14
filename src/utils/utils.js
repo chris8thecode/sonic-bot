@@ -1,4 +1,4 @@
-import { getOwner } from "./config.js";
+import { getOwner } from "../config/config.js";
 
 export const jid = {
   toUser: (num) => `${num?.replace(/[^0-9]/g, "")}@s.whatsapp.net`,

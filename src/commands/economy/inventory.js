@@ -1,6 +1,6 @@
-import { emoji as e } from "../../config.js";
-import { send, jid, getTarget } from "../../utils.js";
-import { getInventory } from "../../database.js";
+import { emoji as e } from "../../config/config.js";
+import { send, jid, getTarget } from "../../utils/utils.js";
+import { getInventory } from "../../database/database.js";
 
 export default {
   cmd: ["inventory", "inv", "bag", "items"],

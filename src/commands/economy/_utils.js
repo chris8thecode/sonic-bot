@@ -1,14 +1,11 @@
-import { emoji as e } from "../../config.js";
-import { send } from "../../utils.js";
+import { emoji as e } from "../../config/config.js";
+import { send } from "../../utils/utils.js";
 import {
   checkCommandCooldown,
   formatCooldown,
   COOLDOWN,
-} from "../../cooldown.js";
+} from "../../utils/cooldown.js";
 
-/**
- * Jobs for work command
- */
 export const JOBS = [
   {
     name: "Programmer",
@@ -142,25 +139,13 @@ export const JOBS = [
   },
 ];
 
-/**
- * Random number between min and max (inclusive)
- */
 export const random = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
-/**
- * Random array element
- */
 export const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-/**
- * Format coin amount with emoji
- */
 export const formatCoins = (amount) => `${e.ring} ${amount.toLocaleString()}`;
 
-/**
- * Check economy command cooldown wrapper
- */
 export const checkEconCooldown = async (sock, msg, command, duration) => {
   const sender = msg.key.participant || msg.key.remoteJid;
   const cd = checkCommandCooldown(sender, command, duration);

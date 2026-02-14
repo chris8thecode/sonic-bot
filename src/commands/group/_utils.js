@@ -1,5 +1,5 @@
-import { emoji as e } from "../../config.js";
-import { jid, send, getTarget } from "../../utils.js";
+import { emoji as e } from "../../config/config.js";
+import { jid, send, getTarget } from "../../utils/utils.js";
 
 const getAdminIds = (metadata) => {
   return metadata.participants.filter((p) => p.admin).map((p) => p.id);

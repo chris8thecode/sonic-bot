@@ -1,7 +1,7 @@
-import { emoji as e } from "../../config.js";
-import { send } from "../../utils.js";
-import { getUser, addCoins } from "../../database.js";
-import { COOLDOWN } from "../../cooldown.js";
+import { emoji as e } from "../../config/config.js";
+import { send } from "../../utils/utils.js";
+import { getUser, addCoins } from "../../database/database.js";
+import { COOLDOWN } from "../../utils/cooldown.js";
 import { random, formatCoins, checkEconCooldown } from "./_utils.js";
 
 export default {

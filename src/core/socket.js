@@ -4,12 +4,12 @@ import {
   fetchLatestBaileysVersion,
   DisconnectReason,
 } from "baileys";
-import { useSqliteAuthState } from "./use-sqlite-file-auth-state.js";
+import { useSqliteAuthState } from "../database/use-sqlite-file-auth-state.js";
 import NodeCache from "@cacheable/node-cache";
 import pino from "pino";
 import readline from "readline";
-import { config, getOwner, setOwner } from "./config.js";
-import { handleMessage } from "./handler.js";
+import { config, getOwner, setOwner } from "../config/config.js";
+import { handleMessage } from "../core/handler.js";
 
 const logger = pino({ level: "silent" });
 const msgRetryCache = new NodeCache();

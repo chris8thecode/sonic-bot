@@ -1,5 +1,5 @@
-import { emoji as e } from "../../config.js";
-import { send, jid } from "../../utils.js";
+import { emoji as e } from "../../config/config.js";
+import { send, jid } from "../../utils/utils.js";
 import { checkPerms } from "./_utils.js";
 
 export default {

@@ -1,6 +1,6 @@
-import { emoji as e } from "../../config.js";
-import { send } from "../../utils.js";
-import { addCoins } from "../../database.js";
+import { emoji as e } from "../../config/config.js";
+import { send } from "../../utils/utils.js";
+import { addCoins } from "../../database/database.js";
 import {
   random,
   randomFrom,

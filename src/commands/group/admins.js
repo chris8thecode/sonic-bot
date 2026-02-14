@@ -1,5 +1,4 @@
-import { emoji as e } from "../../config.js";
-import { jid } from "../../utils.js";
+import { emoji as e } from "../../config/config.js";
 import { checkPerms, getParticipantDisplay } from "./_utils.js";
 
 export default {

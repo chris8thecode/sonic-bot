@@ -1,6 +1,6 @@
-import { config, emoji as e } from "../../config.js";
-import { format, send } from "../../utils.js";
-import { state } from "../../state.js";
+import { config, emoji as e } from "../../config/config.js";
+import { format, send } from "../../utils/utils.js";
+import { state } from "../../core/state.js";
 
 export default {
   cmd: ["info", "about", "botinfo"],
