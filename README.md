@@ -157,7 +157,7 @@ export default {
 
 **Authentication fails**
 
-- Delete `auth_session.db` and other files named `auth_session`
+- Delete `sonic_session.db` and other files named `sonic_session`
 - Restart bot and re-authenticate
 - Check phone number format (include country code)
 
