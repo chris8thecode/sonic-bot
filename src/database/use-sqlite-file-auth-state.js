@@ -203,7 +203,7 @@ function prepareStatements(db) {
 }
 
 // Support for multiple accounts in one database with separate credential storage
-export function useSqliteAuthState(dbPath = "auth.db", opts = {}) {
+export function useSqliteAuthState(dbPath = "sonic_session.db", opts = {}) {
   const { accountId = "default", accountLabel = null } = opts;
 
   const db = new Database(dbPath);
