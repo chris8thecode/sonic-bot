@@ -141,7 +141,7 @@ export default {
 >
 > 1. **Phone Number**: Use your personal for fun WhatsApp number (not business)
 > 2. **Internet Connection**: Stable internet required
-> 3. **Session Persistence**: Auth session saved in `auth_session.db` file
+> 3. **Session Persistence**: Auth session saved in `sonic_session.db` file
 > 4. **Rate Limiting**: WhatsApp may rate-limit if commands are spammed
 > 5. **Privacy**: Bot respects WhatsApp's privacy settings
 
