@@ -6,17 +6,6 @@ import { checkGlobalCooldown, formatCooldown } from "../utils/cooldown.js";
 export const handleMessage = async (sock, msg) => {
   if (!msg.message || msg.key.remoteJid === "status@broadcast") return;
 
-  const botNumber = jid.fromUser(sock.user?.id);
-  const chatNumber = jid.fromUser(msg.key.remoteJid);
-  const isSelfChat = botNumber === chatNumber;
-
-  /*
-   * Self-sent messages are ignored unless they're in the bot's own chat because
-   * we want to allow the owner to test commands privately without triggering
-   * responses in other conversations.
-   */
-  if (msg.key.fromMe && !isSelfChat) return;
-
   const text = getText(msg);
   if (!text.startsWith(config.prefix)) return;
 
