@@ -21,7 +21,7 @@ Sonic WhatsApp bot streamlines group management, enhances user engagement and de
 
 The developers are not responsible for any misuse of sonic or any consequences arising from its use. Users are solely responsible for their actions and must ensure they have proper consent before adding sonic to groups or sending messages.
 
-> [!WARNING] 
+> [!WARNING]
 > WhatsApp may suspend or ban accounts that violate their terms of service. Use sonic at your own risk.
 
 ## Features
@@ -34,6 +34,38 @@ The developers are not responsible for any misuse of sonic or any consequences a
 - **Auto-Save Configuration** - Persistent settings
 - **Emoji-Rich Interface** - Beautiful, colorful responses
 
+## Prerequisites for Local Installation
+
+Before cloning and running Sonic on your laptop or computer ensure you have the following installed:
+
+### Windows
+
+- [Node.js & npm](https://nodejs.org/) (Download the installer)
+- [Git](https://git-scm.com/download/win)
+- (Optional) [Windows Terminal](https://aka.ms/terminal) or PowerShell
+
+### macOS
+
+- [Node.js & npm](https://nodejs.org/) (Download the installer or use Homebrew: `brew install node`)
+- [Git](https://git-scm.com/download/mac) (or install via Homebrew: `brew install git`)
+- Terminal app (built-in)
+
+### Linux
+
+- [Node.js & npm](https://nodejs.org/en/download) (Follow the official instructions)
+- [Git](https://git-scm.com/install/linux) (Follow the official instructions for your distribution)
+- Terminal app (built-in)
+
+**Verify installation:**
+
+```bash
+node --version
+npm --version
+git --version
+```
+
+Once these are installed, you can proceed to clone the repository and follow the installation steps in Below.
+
 ## Quick Start
 
 ### Installation
@@ -41,6 +73,7 @@ The developers are not responsible for any misuse of sonic or any consequences a
 1. **Clone or download sonic**
 
    ```bash
+   git clone https://github.com/xodo2fast4u/sonic-bot.git
    cd sonic-bot
    ```
 
@@ -48,6 +81,8 @@ The developers are not responsible for any misuse of sonic or any consequences a
 
    ```bash
    npm install
+   # or
+   npm i
    ```
 
 3. **Configure environment**
@@ -62,8 +97,6 @@ The developers are not responsible for any misuse of sonic or any consequences a
 
    ```bash
    npm start
-   # or
-   node src/index.js
    ```
 
 5. **Connect WhatsApp**
@@ -144,6 +177,58 @@ export default {
 > 3. **Session Persistence**: Auth session saved in `sonic_session.db` file
 > 4. **Rate Limiting**: WhatsApp may rate-limit if commands are spammed
 > 5. **Privacy**: Bot respects WhatsApp's privacy settings
+
+## Deployment Options
+
+Sonic can be run on various platforms besides your local machine/PC:
+
+### Termux (Android)
+
+Run Sonic on your Android device using Termux:
+
+1. **Install Termux** from F-Droid or Google Play Store
+2. **Update and install dependencies**
+   ```bash
+   pkg update && pkg upgrade
+   pkg install nodejs git
+   ```
+3. **Clone and setup Sonic**
+   ```bash
+   git clone https://github.com/xodo2fast4u/sonic-bot.git
+   cd sonic-bot
+   npm install or npm i
+   ```
+4. **Run Sonic**
+   ```bash
+   npm start
+   ```
+5. **Pair WhatsApp** as usual
+
+**Tips:**
+
+- Keep Termux open or use a process manager like `pm2` (`npm install -g pm2`)
+- Keep your device plugged in for uninterrupted operation
+
+### Optiklink
+
+You can deploy Sonic on [Optiklink](https://optiklink.net/home) for cloud-based hosting:
+
+1. **Sign up** and create a new project
+2. **Deploy Sonic**
+   - Choose Node.js runtime
+   - Upload Sonic zip
+   - Unzip and move content to root
+   - Set environment variables (`PREFIX`, `OWNER_NUMBER`, `BOT_NAME`)
+3. **Configure .env** via Optiklink's environment settings or let Sonic auto-create it
+4. **Run**
+   - Optiklink will start your bot and keep it running 24/7
+   - Monitor logs and bot status from the dashboard
+
+**Benefits:**
+
+- Always-on hosting
+- No need to keep your device running
+- Easy deployment and monitoring
 
 ## Troubleshooting
 
