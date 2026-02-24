@@ -47,6 +47,10 @@ export default {
 ┃ ${p}economy - Stats
 ╰━━━━━━━━━━━━━━━━━━━━━╯
 
+╭━━━ ${e.tool} *TOOLS* ━━━╮
+┃ ${p}calculate - Do maths
+╰━━━━━━━━━━━━━━━━━━━━━╯
+
 ╭━━━ ${e.group} *GROUP* ━━━╮
 ┃ ${p}kick / ${p}add
 ┃ ${p}promote / ${p}demote

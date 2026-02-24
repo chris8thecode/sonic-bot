@@ -49,6 +49,7 @@ export const emoji = Object.freeze({
   time: "⏱️",
   ping: "🏓",
   rocket: "🚀",
+  tool: "⚒️",
 });
 
 let ownerNumber = config.ownerNumber;
