@@ -2,7 +2,7 @@ import { emoji as e } from "../../config/config.js";
 import { checkPerms, getParticipantDisplay } from "./_utils.js";
 
 export default {
-  cmd: ["tagall", "all", "everyone"],
+  cmd: ["tagall"],
   desc: "Tag all members",
 
   run: async (sonic, msg, args) => {

@@ -1,22 +1,20 @@
 import { emoji as e } from "../../config/config.js";
-import { send, getTarget, jid } from "../../utils/utils.js";
+import { getTarget, jid } from "../../utils/utils.js";
 import { getUser } from "../../database/database.js";
 import { formatCoins } from "./_utils.js";
 
 export default {
-  cmd: ["balance", "bal", "coins", "wallet", "money"],
+  cmd: ["balance"],
   desc: "Check coin balance",
 
-  run: async (sonic, msg, args) => {
+  run: async ({ text, mention, msg }) => {
     const target = getTarget(msg) || msg.key.participant || msg.key.remoteJid;
     const user = getUser(target);
     const num = jid.fromUser(target);
     const isSelf = target === (msg.key.participant || msg.key.remoteJid);
 
     if (isSelf) {
-      await send.text(
-        sonic,
-        msg,
+      await text(
         `
 ╭━━━ ${e.ring} *WALLET* ━━━╮
 ┃ ${e.user} Your Balance
@@ -27,9 +25,7 @@ export default {
 ╰━━━━━━━━━━━━━━━━━━━╯`.trim(),
       );
     } else {
-      await send.mention(
-        sonic,
-        msg,
+      await mention(
         `
 ╭━━━ ${e.ring} *WALLET* ━━━╮
 ┃ ${e.user} @${num}'s Balance

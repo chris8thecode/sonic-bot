@@ -1,5 +1,4 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 import { getUser, addCoins } from "../../database/database.js";
 import { COOLDOWN } from "../../utils/cooldown.js";
 import { random, formatCoins, checkEconCooldown } from "./_utils.js";
@@ -8,7 +7,7 @@ export default {
   cmd: ["daily", "claim"],
   desc: "Claim daily reward",
 
-  run: async (sonic, msg) => {
+  run: async ({ text, sonic, msg }) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
     if (!(await checkEconCooldown(sonic, msg, "daily", COOLDOWN.DAILY))) return;
@@ -19,7 +18,7 @@ export default {
 
     const newBalance = addCoins(sender, total);
 
-    await send.text(
+    await text(
       sonic,
       msg,
       `

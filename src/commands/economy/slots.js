@@ -1,35 +1,26 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 import { getUser, addCoins, removeCoins } from "../../database/database.js";
 import { random, formatCoins, checkEconCooldown } from "./_utils.js";
 
 export default {
-  cmd: ["gamble", "bet", "slot"],
+  cmd: ["slots"],
   desc: "Gamble your coins (50/50)",
 
-  run: async (sonic, msg, args) => {
+  run: async ({ text, sonic, msg }, args) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    if (!(await checkEconCooldown(sonic, msg, "gamble", 10000))) return;
+    if (!(await checkEconCooldown(sonic, msg, "slots", 10000))) return;
 
     const user = getUser(sender);
     const bet =
       args[0]?.toLowerCase() === "all" ? user.balance : parseInt(args[0]);
 
     if (!bet || bet <= 0) {
-      return send.text(
-        sonic,
-        msg,
-        `${e.cross} Provide a valid bet! Example: !gamble 100`,
-      );
+      return text(`${e.cross} Provide a valid bet! Example: !slots 100`);
     }
 
     if (bet > user.balance) {
-      return send.text(
-        sonic,
-        msg,
-        `${e.cross} You only have ${formatCoins(user.balance)}!`,
-      );
+      return text(`${e.cross} You only have ${formatCoins(user.balance)}!`);
     }
 
     const slots = ["🍎", "🍊", "🍋", "🍇", "🍒", "💎", "7️⃣"];
@@ -64,9 +55,7 @@ export default {
         ? addCoins(sender, winnings)
         : (removeCoins(sender, bet), getUser(sender).balance);
 
-    await send.text(
-      sonic,
-      msg,
+    await text(
       `
 ╭━━━ 🎰 *SLOTS* ━━━╮
 ┃

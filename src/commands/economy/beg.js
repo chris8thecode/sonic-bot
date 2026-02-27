@@ -1,5 +1,4 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 import { addCoins } from "../../database/database.js";
 import {
   random,
@@ -40,7 +39,7 @@ export default {
   cmd: ["beg"],
   desc: "Beg for coins",
 
-  run: async (sonic, msg) => {
+  run: async ({ text, sonic, msg }) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
     if (!(await checkEconCooldown(sonic, msg, "beg", 30000))) return;
@@ -52,9 +51,7 @@ export default {
       const response = randomFrom(RESPONSES.success);
       const newBalance = addCoins(sender, earned);
 
-      await send.text(
-        sonic,
-        msg,
+      await text(
         `
 ${response.emoji} *${response.giver}* ${response.message}!
 
@@ -62,7 +59,7 @@ ${e.check} Received: ${formatCoins(earned)}
 ${e.ring} Balance: ${formatCoins(newBalance)}`.trim(),
       );
     } else {
-      await send.text(sonic, msg, `${e.cross} ${randomFrom(RESPONSES.fail)}`);
+      await text(`${e.cross} ${randomFrom(RESPONSES.fail)}`);
     }
   },
 };

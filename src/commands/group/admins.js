@@ -2,7 +2,7 @@ import { emoji as e } from "../../config/config.js";
 import { checkPerms, getParticipantDisplay } from "./_utils.js";
 
 export default {
-  cmd: ["admins", "listadmin", "adminlist"],
+  cmd: ["admins"],
   desc: "List group admins",
 
   run: async (sonic, msg) => {

@@ -1,17 +1,15 @@
 import { config, emoji as e } from "../../config/config.js";
-import { format, send } from "../../utils/utils.js";
+import { format } from "../../utils/utils.js";
 import { state } from "../../core/state.js";
 
 export default {
-  cmd: ["info", "about", "botinfo"],
+  cmd: ["info"],
   desc: "Bot information",
 
-  run: async (sonic, msg) => {
+  run: async ({ text }) => {
     const uptime = format.uptime((Date.now() - state.startTime) / 1000);
 
-    await send.text(
-      sonic,
-      msg,
+    await text(
       `
 ╭━━━ ${e.sonic} *${config.botName.toUpperCase()}* ━━━╮
 ┃ ${e.star} Version: ${config.version}

@@ -1,17 +1,15 @@
 import { emoji as e } from "../../config/config.js";
-import { format, send } from "../../utils/utils.js";
+import { format } from "../../utils/utils.js";
 import os from "os";
 
 export default {
-  cmd: ["server", "stats", "status"],
+  cmd: ["server"],
   desc: "Server statistics",
 
-  run: async (sonic, msg) => {
+  run: async ({ text }) => {
     const [total, free] = [os.totalmem(), os.freemem()];
 
-    await send.text(
-      sonic,
-      msg,
+    await text(
       `
 ╭━━━ ${e.rocket} *SERVER* ━━━╮
 ┃ ${e.bolt} OS: ${os.platform()} ${os.arch()}

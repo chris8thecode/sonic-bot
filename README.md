@@ -134,17 +134,19 @@ BOT_NAME=Sonic             # Bot display name
 
    ```javascript
    export default {
-     cmd: ["command", "alias"], // Command names
+     cmd: ["command", "alias"], // Command names an alias is optional
      desc: "Command description", // Help text
-     run: async (sonic, msg, args) => {
+     run: async (text) => {
        // Your command logic here
      },
    };
    ```
 
 3. **Use utilities**:
-   - `send.text()` - Send text messages
-   - `send.mention()` - Send messages with mentions
+   - `text()` - Send text messages
+   - `mention()` - Send messages with mentions
+   - `react()` - React to message
+   - `edit()` - Edit sent message
    - `checkPerms()` - Check user permissions
    - `jid` helpers - Handle WhatsApp IDs
 
@@ -152,14 +154,13 @@ BOT_NAME=Sonic             # Bot display name
 
 ```javascript
 import { emoji as e } from "../../config.js";
-import { send } from "../../utils.js";
 
 export default {
-  cmd: ["hello", "hi"],
+  cmd: ["hello"],
   desc: "Greet the bot",
 
-  run: async (sonic, msg) => {
-    await send.text(sonic, msg, `${e.sonic} Hello! I'm Sonic!`);
+  run: async (text) => {
+    await text(`${e.sonic} Hello! I'm Sonic!`);
   },
 };
 ```

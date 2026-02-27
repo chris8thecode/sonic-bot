@@ -1,7 +1,7 @@
 import { participantAction } from "./_utils.js";
 
 export default {
-  cmd: ["promote", "admin"],
+  cmd: ["promote"],
   desc: "Make member admin",
   run: participantAction("promote", "Promoted"),
 };

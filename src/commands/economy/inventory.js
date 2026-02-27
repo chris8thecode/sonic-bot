@@ -1,21 +1,19 @@
 import { emoji as e } from "../../config/config.js";
-import { send, jid, getTarget } from "../../utils/utils.js";
+import { jid, getTarget } from "../../utils/utils.js";
 import { getInventory } from "../../database/database.js";
 
 export default {
-  cmd: ["inventory", "inv", "bag", "items"],
+  cmd: ["inventory", "inv"],
   desc: "View your inventory",
 
-  run: async (sonic, msg) => {
+  run: async ({ text, mention, msg }) => {
     const target = getTarget(msg) || msg.key.participant || msg.key.remoteJid;
     const inventory = getInventory(target);
     const isSelf = target === (msg.key.participant || msg.key.remoteJid);
     const num = jid.fromUser(target);
 
     if (!inventory.length) {
-      return send.text(
-        sonic,
-        msg,
+      return text(
         `${e.cross} ${isSelf ? "Your" : "Their"} inventory is empty!`,
       );
     }
@@ -25,9 +23,7 @@ export default {
       .join("\n");
 
     if (isSelf) {
-      await send.text(
-        sonic,
-        msg,
+      await text(
         `
 ╭━━━ 🎒 *INVENTORY* ━━━╮
 ┃ ${e.user} Your items:
@@ -36,9 +32,7 @@ ${items}
 ╰━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
       );
     } else {
-      await send.mention(
-        sonic,
-        msg,
+      await mention(
         `
 ╭━━━ 🎒 *INVENTORY* ━━━╮
 ┃ ${e.user} @${num}'s items:

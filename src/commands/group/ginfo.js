@@ -3,7 +3,7 @@ import { send, jid } from "../../utils/utils.js";
 import { checkPerms } from "./_utils.js";
 
 export default {
-  cmd: ["ginfo", "groupinfo", "gc"],
+  cmd: ["ginfo"],
   desc: "Group information",
 
   run: async (sonic, msg) => {

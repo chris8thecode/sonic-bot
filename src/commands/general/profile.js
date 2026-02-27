@@ -1,11 +1,11 @@
 import { emoji as e } from "../../config/config.js";
-import { jid, send, getTarget, isOwner } from "../../utils/utils.js";
+import { jid, getTarget, isOwner } from "../../utils/utils.js";
 
 export default {
-  cmd: ["profile", "whois", "check"],
+  cmd: ["profile"],
   desc: "User profile",
 
-  run: async (sonic, msg) => {
+  run: async ({ sonic, msg }) => {
     const target = getTarget(msg) || msg.key.participant || msg.key.remoteJid;
     const num = jid.fromUser(target);
 

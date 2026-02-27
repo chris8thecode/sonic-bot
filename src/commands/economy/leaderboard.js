@@ -1,17 +1,16 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 import { getLeaderboard } from "../../database/database.js";
 import { formatCoins } from "./_utils.js";
 
 export default {
-  cmd: ["leaderboard", "lb", "top", "rich"],
+  cmd: ["leaderboard", "lb"],
   desc: "View richest users",
 
-  run: async (sonic, msg) => {
+  run: async ({ text, mention }) => {
     const top = getLeaderboard(10);
 
     if (!top.length) {
-      return send.text(sonic, msg, `${e.cross} No one has any coins yet!`);
+      return text(`${e.cross} No one has any coins yet!`);
     }
 
     const medals = ["🥇", "🥈", "🥉"];
@@ -27,9 +26,7 @@ export default {
       user.id.includes("@") ? user.id : user.id + "@s.whatsapp.net",
     );
 
-    await send.mention(
-      sonic,
-      msg,
+    await mention(
       `
 ╭━━━ ${e.rocket} *LEADERBOARD* ━━━╮
 ┃

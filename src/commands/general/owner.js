@@ -1,15 +1,12 @@
 import { config, emoji as e, getOwner } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 
 export default {
-  cmd: ["owner", "creator", "dev"],
+  cmd: ["owner", "creator"],
   desc: "Show bot owner",
 
-  run: async (sonic, msg) => {
+  run: async ({ text }) => {
     const owner = getOwner();
-    await send.text(
-      sonic,
-      msg,
+    await text(
       `${e.admin} *${config.botName} Owner:* ${
         owner ? `+${owner}` : "Not configured"
       }`,

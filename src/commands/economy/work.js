@@ -1,5 +1,4 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 import { addCoins } from "../../database/database.js";
 import { COOLDOWN } from "../../utils/cooldown.js";
 import {
@@ -14,7 +13,7 @@ export default {
   cmd: ["work", "job"],
   desc: "Work a random job for coins",
 
-  run: async (sonic, msg) => {
+  run: async ({ text, sonic, msg }) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
     if (!(await checkEconCooldown(sonic, msg, "work", COOLDOWN.WORK))) return;
@@ -25,9 +24,7 @@ export default {
 
     const newBalance = addCoins(sender, earned);
 
-    await send.text(
-      sonic,
-      msg,
+    await text(
       `
 ╭━━━ ${job.emoji} *WORK* ━━━╮
 ┃ 

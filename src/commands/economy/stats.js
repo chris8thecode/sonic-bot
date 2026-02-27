@@ -1,16 +1,15 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 import { getEconomyStats } from "../../database/database.js";
 import { formatCoins } from "./_utils.js";
 
 export default {
-  cmd: ["economy", "ecostats", "estats"],
+  cmd: ["economy"],
   desc: "View economy statistics",
 
-  run: async (sonic, msg) => {
+  run: async ({ text }) => {
     const stats = getEconomyStats();
 
-    await send.text(
+    await text(
       sonic,
       msg,
       `

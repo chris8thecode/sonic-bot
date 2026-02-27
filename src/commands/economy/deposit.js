@@ -1,13 +1,12 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 import { getUser, deposit } from "../../database/database.js";
 import { formatCoins } from "./_utils.js";
 
 export default {
-  cmd: ["deposit", "dep"],
+  cmd: ["deposit"],
   desc: "Deposit coins to bank",
 
-  run: async (sonic, msg, args) => {
+  run: async ({ text, msg }, args) => {
     const sender = msg.key.participant || msg.key.remoteJid;
     const user = getUser(sender);
 
@@ -15,9 +14,7 @@ export default {
       args[0]?.toLowerCase() === "all" ? user.balance : parseInt(args[0]);
 
     if (!amount || amount <= 0) {
-      return send.text(
-        sonic,
-        msg,
+      return text(
         `${e.cross} Provide amount! Example: !deposit 100 or !deposit all`,
       );
     }
@@ -25,16 +22,12 @@ export default {
     const result = deposit(sender, amount);
 
     if (!result.success) {
-      return send.text(
-        sonic,
-        msg,
+      return text(
         `${e.cross} Insufficient cash! You have ${formatCoins(user.balance)}`,
       );
     }
 
-    await send.text(
-      sonic,
-      msg,
+    await text(
       `
 ╭━━━ 🏦 *DEPOSIT* ━━━╮
 ┃

@@ -48,8 +48,17 @@ export const handleMessage = async (sonic, msg) => {
   // Uncomment for debugging
   // console.log(`📩 ${cmdName} | ${jid.fromUser(sender)}`)
 
+  const helpers = {
+    text: (message) => send.text(sonic, msg, message),
+    mention: (text, mentions) => send.mention(sonic, msg, text, mentions),
+    react: (emoji, key) => send.react(sonic, msg, emoji, key),
+    edit: (key, text) => send.edit(sonic, msg, key, text),
+    sonic,
+    msg,
+  };
+
   try {
-    await cmd.run(sonic, msg, args);
+    await cmd.run(helpers, args);
   } catch (err) {
     console.error(`Error [${cmdName}]:`, err.message);
     await send.text(sonic, msg, `❌ Error: ${err.message}`);

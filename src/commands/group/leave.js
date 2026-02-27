@@ -2,7 +2,7 @@ import { emoji as e } from "../../config/config.js";
 import { jid, send } from "../../utils/utils.js";
 
 export default {
-  cmd: ["leave", "bye"],
+  cmd: ["leave"],
   desc: "Leave group",
 
   run: async (sonic, msg) => {

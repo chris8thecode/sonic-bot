@@ -1,14 +1,11 @@
 import { config, emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 
 export default {
   cmd: ["about"],
   desc: "About this bot",
 
-  run: async (sonic, msg) => {
-    await send.text(
-      sonic,
-      msg,
+  run: async ({ text }) => {
+    await text(
       `
 ╭━━━ ${e.sonic} *ABOUT ${config.botName.toUpperCase()}* ━━━╮
 ┃ ${e.star} Name: ${config.botName}

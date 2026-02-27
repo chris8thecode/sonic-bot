@@ -1,12 +1,11 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
 import { checkPerms } from "./_utils.js";
 
 export default {
-  cmd: ["setdesc", "gdesc", "setdescription"],
+  cmd: ["setdesc"],
   desc: "Change group description",
 
-  run: async (sonic, msg, args) => {
+  run: async ({ text, sonic, msg }, args) => {
     if (!(await checkPerms(sonic, msg, { admin: true, botAdmin: true })))
       return;
 
@@ -15,13 +14,11 @@ export default {
         msg.key.remoteJid,
         args.join(" ") || undefined,
       );
-      await send.text(
-        sonic,
-        msg,
+      await text(
         `${e.check} Description ${args.length ? "updated" : "removed"}!`,
       );
     } catch {
-      await send.text(sonic, msg, `${e.cross} Failed.`);
+      await text(`${e.cross} Failed.`);
     }
   },
 };

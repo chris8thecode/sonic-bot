@@ -121,8 +121,8 @@ export const send = {
   edit: (sonic, msg, key, text) =>
     sonic.sendMessage(msg.key.remoteJid, { text, edit: key }),
 
-  react: (sonic, msg, emoji) =>
+  react: (sonic, msg, emoji, key = msg.key) =>
     sonic.sendMessage(msg.key.remoteJid, {
-      react: { text: emoji, key: msg.key },
+      react: { text: emoji, key },
     }),
 };
