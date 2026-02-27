@@ -6,11 +6,11 @@ export default {
   cmd: ["info", "about", "botinfo"],
   desc: "Bot information",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const uptime = format.uptime((Date.now() - state.startTime) / 1000);
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ ${e.sonic} *${config.botName.toUpperCase()}* ━━━╮

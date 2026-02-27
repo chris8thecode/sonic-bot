@@ -26,7 +26,7 @@ export const startSocket = async () => {
 
   console.log(`🔌 WA v${version.join(".")}`);
 
-  const sock = makeWASocket({
+  const sonic = makeWASocket({
     version,
     logger,
     auth: {
@@ -41,17 +41,17 @@ export const startSocket = async () => {
     getMessage: async () => undefined,
   });
 
-  if (!sock.authState.creds.registered) {
+  if (!sonic.authState.creds.registered) {
     const phone = await ask("📱 Enter phone number (with country code): ");
     const cleanPhone = phone.replace(/[^0-9]/g, "");
 
-    const code = await sock.requestPairingCode(cleanPhone);
+    const code = await sonic.requestPairingCode(cleanPhone);
     console.log(`\n🔑 Pairing Code: ${code}\n`);
 
     if (!getOwner()) setOwner(cleanPhone);
   }
 
-  sock.ev.process(async (events) => {
+  sonic.ev.process(async (events) => {
     if (events["connection.update"]) {
       const { connection, lastDisconnect } = events["connection.update"];
 
@@ -88,7 +88,7 @@ export const startSocket = async () => {
       if (type !== "notify") return;
 
       for (const msg of messages) {
-        await handleMessage(sock, msg).catch(console.error);
+        await handleMessage(sonic, msg).catch(console.error);
       }
     }
 
@@ -98,5 +98,5 @@ export const startSocket = async () => {
     }
   });
 
-  return sock;
+  return sonic;
 };

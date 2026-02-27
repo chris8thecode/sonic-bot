@@ -7,7 +7,7 @@ export default {
   cmd: ["withdraw", "wd"],
   desc: "Withdraw coins from bank",
 
-  run: async (sock, msg, args) => {
+  run: async (sonic, msg, args) => {
     const sender = msg.key.participant || msg.key.remoteJid;
     const user = getUser(sender);
 
@@ -16,7 +16,7 @@ export default {
 
     if (!amount || amount <= 0) {
       return send.text(
-        sock,
+        sonic,
         msg,
         `${e.cross} Provide amount! Example: !withdraw 100 or !withdraw all`,
       );
@@ -26,14 +26,14 @@ export default {
 
     if (!result.success) {
       return send.text(
-        sock,
+        sonic,
         msg,
         `${e.cross} Insufficient bank balance! You have ${formatCoins(user.bank)}`,
       );
     }
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ 🏦 *WITHDRAWAL* ━━━╮

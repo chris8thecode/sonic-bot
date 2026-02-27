@@ -8,10 +8,10 @@ export default {
   cmd: ["daily", "claim"],
   desc: "Claim daily reward",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    if (!(await checkEconCooldown(sock, msg, "daily", COOLDOWN.DAILY))) return;
+    if (!(await checkEconCooldown(sonic, msg, "daily", COOLDOWN.DAILY))) return;
 
     const base = 100;
     const bonus = random(0, 100);
@@ -20,7 +20,7 @@ export default {
     const newBalance = addCoins(sender, total);
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ ${e.star} *DAILY REWARD* ━━━╮

@@ -5,8 +5,8 @@ export default {
   cmd: ["tagall", "all", "everyone"],
   desc: "Tag all members",
 
-  run: async (sock, msg, args) => {
-    const meta = await checkPerms(sock, msg, { admin: true });
+  run: async (sonic, msg, args) => {
+    const meta = await checkPerms(sonic, msg, { admin: true });
     if (!meta) return;
 
     const memberIds = meta.participants.map((p) => p.id);
@@ -17,7 +17,7 @@ export default {
 
     const text = args.length ? `${args.join(" ")}\n\n` : "";
 
-    await sock.sendMessage(
+    await sonic.sendMessage(
       msg.key.remoteJid,
       {
         text: `${text}${e.sonic} *Tagging ${memberIds.length} members:*\n\n${mentions}`,

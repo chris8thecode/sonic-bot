@@ -7,11 +7,11 @@ export default {
   cmd: ["leaderboard", "lb", "top", "rich"],
   desc: "View richest users",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const top = getLeaderboard(10);
 
     if (!top.length) {
-      return send.text(sock, msg, `${e.cross} No one has any coins yet!`);
+      return send.text(sonic, msg, `${e.cross} No one has any coins yet!`);
     }
 
     const medals = ["🥇", "🥈", "🥉"];
@@ -28,7 +28,7 @@ export default {
     );
 
     await send.mention(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ ${e.rocket} *LEADERBOARD* ━━━╮

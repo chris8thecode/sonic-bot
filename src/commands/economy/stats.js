@@ -7,11 +7,11 @@ export default {
   cmd: ["economy", "ecostats", "estats"],
   desc: "View economy statistics",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const stats = getEconomyStats();
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ 📊 *ECONOMY STATS* ━━━╮

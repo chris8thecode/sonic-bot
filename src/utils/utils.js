@@ -112,17 +112,17 @@ export const format = {
 };
 
 export const send = {
-  text: (sock, msg, text) =>
-    sock.sendMessage(msg.key.remoteJid, { text }, { quoted: msg }),
+  text: (sonic, msg, text) =>
+    sonic.sendMessage(msg.key.remoteJid, { text }, { quoted: msg }),
 
-  mention: (sock, msg, text, mentions) =>
-    sock.sendMessage(msg.key.remoteJid, { text, mentions }, { quoted: msg }),
+  mention: (sonic, msg, text, mentions) =>
+    sonic.sendMessage(msg.key.remoteJid, { text, mentions }, { quoted: msg }),
 
-  edit: (sock, msg, key, text) =>
-    sock.sendMessage(msg.key.remoteJid, { text, edit: key }),
+  edit: (sonic, msg, key, text) =>
+    sonic.sendMessage(msg.key.remoteJid, { text, edit: key }),
 
-  react: (sock, msg, emoji) =>
-    sock.sendMessage(msg.key.remoteJid, {
+  react: (sonic, msg, emoji) =>
+    sonic.sendMessage(msg.key.remoteJid, {
       react: { text: emoji, key: msg.key },
     }),
 };

@@ -5,13 +5,13 @@ export default {
   cmd: ["profile", "whois", "check"],
   desc: "User profile",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const target = getTarget(msg) || msg.key.participant || msg.key.remoteJid;
     const num = jid.fromUser(target);
 
     let pp;
     try {
-      pp = await sock.profilePictureUrl(target, "image");
+      pp = await sonic.profilePictureUrl(target, "image");
     } catch {}
 
     const text = `
@@ -20,7 +20,7 @@ export default {
 ┃ ${e.admin} Owner: ${isOwner(target) ? "Yes ✓" : "No"}
 ╰━━━━━━━━━━━━━━━━━━━╯`.trim();
 
-    await sock.sendMessage(
+    await sonic.sendMessage(
       msg.key.remoteJid,
       pp
         ? { image: { url: pp }, caption: text, mentions: [target] }

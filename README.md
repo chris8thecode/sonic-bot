@@ -136,7 +136,7 @@ BOT_NAME=Sonic             # Bot display name
    export default {
      cmd: ["command", "alias"], // Command names
      desc: "Command description", // Help text
-     run: async (sock, msg, args) => {
+     run: async (sonic, msg, args) => {
        // Your command logic here
      },
    };
@@ -158,8 +158,8 @@ export default {
   cmd: ["hello", "hi"],
   desc: "Greet the bot",
 
-  run: async (sock, msg) => {
-    await send.text(sock, msg, `${e.sonic} Hello! I'm Sonic!`);
+  run: async (sonic, msg) => {
+    await send.text(sonic, msg, `${e.sonic} Hello! I'm Sonic!`);
   },
 };
 ```

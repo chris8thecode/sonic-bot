@@ -6,8 +6,8 @@ export default {
   cmd: ["ginfo", "groupinfo", "gc"],
   desc: "Group information",
 
-  run: async (sock, msg) => {
-    const meta = await checkPerms(sock, msg);
+  run: async (sonic, msg) => {
+    const meta = await checkPerms(sonic, msg);
     if (!meta) return;
 
     const admins = meta.participants.filter((p) => p.admin).length;
@@ -20,7 +20,7 @@ export default {
         : "Unknown";
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ ${e.group} *GROUP INFO* ━━━╮

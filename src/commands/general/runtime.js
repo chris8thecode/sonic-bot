@@ -6,8 +6,8 @@ export default {
   cmd: ["runtime", "uptime", "up"],
   desc: "Bot uptime",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const uptime = format.uptime((Date.now() - state.startTime) / 1000);
-    await send.text(sock, msg, `${e.time} *Uptime:* ${uptime}`);
+    await send.text(sonic, msg, `${e.time} *Uptime:* ${uptime}`);
   },
 };

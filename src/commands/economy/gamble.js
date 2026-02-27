@@ -7,10 +7,10 @@ export default {
   cmd: ["gamble", "bet", "slot"],
   desc: "Gamble your coins (50/50)",
 
-  run: async (sock, msg, args) => {
+  run: async (sonic, msg, args) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    if (!(await checkEconCooldown(sock, msg, "gamble", 10000))) return;
+    if (!(await checkEconCooldown(sonic, msg, "gamble", 10000))) return;
 
     const user = getUser(sender);
     const bet =
@@ -18,7 +18,7 @@ export default {
 
     if (!bet || bet <= 0) {
       return send.text(
-        sock,
+        sonic,
         msg,
         `${e.cross} Provide a valid bet! Example: !gamble 100`,
       );
@@ -26,7 +26,7 @@ export default {
 
     if (bet > user.balance) {
       return send.text(
-        sock,
+        sonic,
         msg,
         `${e.cross} You only have ${formatCoins(user.balance)}!`,
       );
@@ -65,7 +65,7 @@ export default {
         : (removeCoins(sender, bet), getUser(sender).balance);
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ 🎰 *SLOTS* ━━━╮

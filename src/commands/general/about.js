@@ -5,9 +5,9 @@ export default {
   cmd: ["about"],
   desc: "About this bot",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ ${e.sonic} *ABOUT ${config.botName.toUpperCase()}* ━━━╮

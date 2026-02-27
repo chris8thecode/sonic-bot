@@ -7,7 +7,7 @@ export default {
   cmd: ["balance", "bal", "coins", "wallet", "money"],
   desc: "Check coin balance",
 
-  run: async (sock, msg, args) => {
+  run: async (sonic, msg, args) => {
     const target = getTarget(msg) || msg.key.participant || msg.key.remoteJid;
     const user = getUser(target);
     const num = jid.fromUser(target);
@@ -15,7 +15,7 @@ export default {
 
     if (isSelf) {
       await send.text(
-        sock,
+        sonic,
         msg,
         `
 ╭━━━ ${e.ring} *WALLET* ━━━╮
@@ -28,7 +28,7 @@ export default {
       );
     } else {
       await send.mention(
-        sock,
+        sonic,
         msg,
         `
 ╭━━━ ${e.ring} *WALLET* ━━━╮

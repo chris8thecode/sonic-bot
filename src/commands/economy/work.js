@@ -14,10 +14,10 @@ export default {
   cmd: ["work", "job"],
   desc: "Work a random job for coins",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    if (!(await checkEconCooldown(sock, msg, "work", COOLDOWN.WORK))) return;
+    if (!(await checkEconCooldown(sonic, msg, "work", COOLDOWN.WORK))) return;
 
     const job = randomFrom(JOBS);
     const earned = random(job.min, job.max);
@@ -26,7 +26,7 @@ export default {
     const newBalance = addCoins(sender, earned);
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ ${job.emoji} *WORK* ━━━╮

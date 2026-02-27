@@ -6,18 +6,19 @@ export default {
   cmd: ["revoke", "resetlink"],
   desc: "Reset group invite link",
 
-  run: async (sock, msg) => {
-    if (!(await checkPerms(sock, msg, { admin: true, botAdmin: true }))) return;
+  run: async (sonic, msg) => {
+    if (!(await checkPerms(sonic, msg, { admin: true, botAdmin: true })))
+      return;
 
     try {
-      const code = await sock.groupRevokeInvite(msg.key.remoteJid);
+      const code = await sonic.groupRevokeInvite(msg.key.remoteJid);
       await send.text(
-        sock,
+        sonic,
         msg,
         `${e.check} Link revoked!\nNew: https://chat.whatsapp.com/${code}`,
       );
     } catch {
-      await send.text(sock, msg, `${e.cross} Failed to revoke.`);
+      await send.text(sonic, msg, `${e.cross} Failed to revoke.`);
     }
   },
 };

@@ -6,7 +6,7 @@ const getAdminIds = (metadata) => {
 };
 
 export const checkPerms = async (
-  sock,
+  sonic,
   msg,
   { admin = false, botAdmin = false } = {},
 ) => {
@@ -15,14 +15,14 @@ export const checkPerms = async (
   const sender = jid.getSender(msg) || msg.key.participant || msg.key.remoteJid;
 
   if (!jid.isGroup(groupJid)) {
-    await send.text(sock, msg, `${e.cross} Group command only!`);
+    await send.text(sonic, msg, `${e.cross} Group command only!`);
     return null;
   }
 
-  const metadata = await sock.groupMetadata(groupJid);
+  const metadata = await sonic.groupMetadata(groupJid);
   const adminIds = getAdminIds(metadata);
 
-  const botJid = sock.user?.id;
+  const botJid = sonic.user?.id;
   const botNormalized = jid.normalize(botJid);
 
   if (admin) {
@@ -34,7 +34,7 @@ export const checkPerms = async (
     );
 
     if (!isAdmin) {
-      await send.text(sock, msg, `${e.cross} Admin only!`);
+      await send.text(sonic, msg, `${e.cross} Admin only!`);
       return null;
     }
   }
@@ -47,7 +47,7 @@ export const checkPerms = async (
     );
 
     if (!isBotAdmin) {
-      await send.text(sock, msg, `${e.cross} I need admin rights!`);
+      await send.text(sonic, msg, `${e.cross} I need admin rights!`);
       return null;
     }
   }
@@ -55,10 +55,10 @@ export const checkPerms = async (
   return metadata;
 };
 
-export const requireTarget = async (sock, msg) => {
+export const requireTarget = async (sonic, msg) => {
   const target = getTarget(msg);
   if (!target) {
-    await send.text(sock, msg, `${e.cross} Mention or reply to a user!`);
+    await send.text(sonic, msg, `${e.cross} Mention or reply to a user!`);
     return null;
   }
   return target;
@@ -76,29 +76,29 @@ export const getParticipantDisplay = (participant) => {
  * reducing code duplication across kick, promote, demote, and add commands.
  */
 export const participantAction =
-  (action, successMsg) => async (sock, msg, args) => {
-    const meta = await checkPerms(sock, msg, { admin: true, botAdmin: true });
+  (action, successMsg) => async (sonic, msg, args) => {
+    const meta = await checkPerms(sonic, msg, { admin: true, botAdmin: true });
     if (!meta) return;
 
     let target;
     if (action === "add") {
-      if (!args[0]) return send.text(sock, msg, `${e.warn} Provide a number!`);
+      if (!args[0]) return send.text(sonic, msg, `${e.warn} Provide a number!`);
       target = jid.toUser(args[0]);
 
       /*
        * onWhatsApp check prevents attempting to add non-existent numbers which
        * would fail anyway but waste API calls and confuse users with generic errors.
        */
-      const [check] = await sock.onWhatsApp(target).catch(() => []);
+      const [check] = await sonic.onWhatsApp(target).catch(() => []);
       if (!check?.exists)
-        return send.text(sock, msg, `${e.cross} Not on WhatsApp!`);
+        return send.text(sonic, msg, `${e.cross} Not on WhatsApp!`);
     } else {
-      target = await requireTarget(sock, msg);
+      target = await requireTarget(sonic, msg);
       if (!target) return;
     }
 
     try {
-      const [result] = await sock.groupParticipantsUpdate(
+      const [result] = await sonic.groupParticipantsUpdate(
         msg.key.remoteJid,
         [target],
         action,
@@ -106,14 +106,14 @@ export const participantAction =
 
       if (result.status === "200") {
         await send.mention(
-          sock,
+          sonic,
           msg,
           `${e.check} ${successMsg} @${jid.fromUser(target)}`,
           [target],
         );
       } else {
         await send.text(
-          sock,
+          sonic,
           msg,
           `${e.cross} Failed! Error: ${result.status}`,
         );
@@ -124,7 +124,7 @@ export const participantAction =
        * or their contact's privacy settings, so we check for 403 to clarify.
        */
       await send.text(
-        sock,
+        sonic,
         msg,
         `${e.cross} ${err.message?.includes("403") ? "Privacy settings prevent this." : "Failed."}`,
       );
@@ -135,13 +135,13 @@ export const participantAction =
  * Factory function creates similar setting toggle handlers with different settings,
  * reducing code duplication across lock, unlock, and other group setting commands.
  */
-export const settingAction = (setting, successMsg) => async (sock, msg) => {
-  if (!(await checkPerms(sock, msg, { admin: true, botAdmin: true }))) return;
+export const settingAction = (setting, successMsg) => async (sonic, msg) => {
+  if (!(await checkPerms(sonic, msg, { admin: true, botAdmin: true }))) return;
 
   try {
-    await sock.groupSettingUpdate(msg.key.remoteJid, setting);
-    await send.text(sock, msg, `${e.check} ${successMsg}`);
+    await sonic.groupSettingUpdate(msg.key.remoteJid, setting);
+    await send.text(sonic, msg, `${e.check} ${successMsg}`);
   } catch {
-    await send.text(sock, msg, `${e.cross} Failed to update settings.`);
+    await send.text(sonic, msg, `${e.cross} Failed to update settings.`);
   }
 };

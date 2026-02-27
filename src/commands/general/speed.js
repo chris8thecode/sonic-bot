@@ -5,8 +5,8 @@ export default {
   cmd: ["speed", "speedtest", "st"],
   desc: "Internet speed test",
 
-  run: async (sock, msg) => {
-    await send.text(sock, msg, `${e.sonic} Running speed test...`);
+  run: async (sonic, msg) => {
+    await send.text(sonic, msg, `${e.sonic} Running speed test...`);
 
     try {
       const start = Date.now();
@@ -18,7 +18,7 @@ export default {
       const mbps = ((buffer.byteLength * 8) / seconds / 1_000_000).toFixed(2);
 
       await send.text(
-        sock,
+        sonic,
         msg,
         `
 ╭━━━ ${e.rocket} *SPEED TEST* ━━━╮
@@ -27,7 +27,7 @@ export default {
 ╰━━━━━━━━━━━━━━━━━━━━╯`.trim(),
       );
     } catch {
-      await send.text(sock, msg, `${e.cross} Speed test failed!`);
+      await send.text(sonic, msg, `${e.cross} Speed test failed!`);
     }
   },
 };

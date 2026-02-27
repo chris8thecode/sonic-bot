@@ -6,21 +6,22 @@ export default {
   cmd: ["setdesc", "gdesc", "setdescription"],
   desc: "Change group description",
 
-  run: async (sock, msg, args) => {
-    if (!(await checkPerms(sock, msg, { admin: true, botAdmin: true }))) return;
+  run: async (sonic, msg, args) => {
+    if (!(await checkPerms(sonic, msg, { admin: true, botAdmin: true })))
+      return;
 
     try {
-      await sock.groupUpdateDescription(
+      await sonic.groupUpdateDescription(
         msg.key.remoteJid,
         args.join(" ") || undefined,
       );
       await send.text(
-        sock,
+        sonic,
         msg,
         `${e.check} Description ${args.length ? "updated" : "removed"}!`,
       );
     } catch {
-      await send.text(sock, msg, `${e.cross} Failed.`);
+      await send.text(sonic, msg, `${e.cross} Failed.`);
     }
   },
 };

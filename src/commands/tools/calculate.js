@@ -5,10 +5,10 @@ export default {
   cmd: ["calculate"],
   desc: "Calculate a math expression",
 
-  run: async (sock, msg, args) => {
+  run: async (sonic, msg, args) => {
     if (!args.length) {
       await send.text(
-        sock,
+        sonic,
         msg,
         `${e.error || "❌"} Please provide a math expression to calculate.\nExample: !calculate 2 + 2`,
       );
@@ -22,7 +22,7 @@ export default {
 
       if (!sanitized) {
         await send.text(
-          sock,
+          sonic,
           msg,
           `${e.error || "❌"} Invalid expression provided.`,
         );
@@ -33,7 +33,7 @@ export default {
 
       if (typeof result !== "number" || isNaN(result)) {
         await send.text(
-          sock,
+          sonic,
           msg,
           `${e.error || "❌"} Invalid calculation result.`,
         );
@@ -41,13 +41,13 @@ export default {
       }
 
       await send.text(
-        sock,
+        sonic,
         msg,
         `${e.success || "✅"} *${sanitized}* = *${result}*`,
       );
     } catch (error) {
       await send.text(
-        sock,
+        sonic,
         msg,
         `${e.error || "❌"} Error calculating expression: ${error.message}`,
       );

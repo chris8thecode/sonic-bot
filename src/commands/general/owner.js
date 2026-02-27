@@ -5,10 +5,10 @@ export default {
   cmd: ["owner", "creator", "dev"],
   desc: "Show bot owner",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const owner = getOwner();
     await send.text(
-      sock,
+      sonic,
       msg,
       `${e.admin} *${config.botName} Owner:* ${
         owner ? `+${owner}` : "Not configured"

@@ -5,12 +5,12 @@ export default {
   cmd: ["leave", "bye"],
   desc: "Leave group",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     if (!jid.isGroup(msg.key.remoteJid)) {
-      return send.text(sock, msg, `${e.cross} Group only!`);
+      return send.text(sonic, msg, `${e.cross} Group only!`);
     }
 
-    await send.text(sock, msg, `${e.sonic} Goodbye! ${e.speed}`);
-    await sock.groupLeave(msg.key.remoteJid);
+    await send.text(sonic, msg, `${e.sonic} Goodbye! ${e.speed}`);
+    await sonic.groupLeave(msg.key.remoteJid);
   },
 };

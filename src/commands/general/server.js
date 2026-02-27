@@ -6,11 +6,11 @@ export default {
   cmd: ["server", "stats", "status"],
   desc: "Server statistics",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const [total, free] = [os.totalmem(), os.freemem()];
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━ ${e.rocket} *SERVER* ━━━╮

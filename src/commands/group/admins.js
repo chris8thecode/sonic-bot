@@ -5,8 +5,8 @@ export default {
   cmd: ["admins", "listadmin", "adminlist"],
   desc: "List group admins",
 
-  run: async (sock, msg) => {
-    const meta = await checkPerms(sock, msg);
+  run: async (sonic, msg) => {
+    const meta = await checkPerms(sonic, msg);
     if (!meta) return;
 
     const adminList = meta.participants.filter((p) => p.admin);
@@ -19,7 +19,7 @@ export default {
       })
       .join("\n");
 
-    await sock.sendMessage(
+    await sonic.sendMessage(
       msg.key.remoteJid,
       {
         text: `╭━━━ ${e.admin} *ADMINS* ━━━╮\n${text}\n╰━━━━━━━━━━━━━━━━━━━╯`,

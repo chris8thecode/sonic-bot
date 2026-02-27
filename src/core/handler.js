@@ -3,7 +3,7 @@ import { commands } from "../commands/index.js";
 import { getText, send, jid } from "../utils/utils.js";
 import { checkGlobalCooldown, formatCooldown } from "../utils/cooldown.js";
 
-export const handleMessage = async (sock, msg) => {
+export const handleMessage = async (sonic, msg) => {
   if (!msg.message || msg.key.remoteJid === "status@broadcast") return;
 
   const text = getText(msg);
@@ -30,14 +30,14 @@ export const handleMessage = async (sock, msg) => {
     switch (cooldown.action) {
       case "warn":
         await send.text(
-          sock,
+          sonic,
           msg,
           `${e.time} Slow down! Wait *${formatCooldown(cooldown.remaining)}* before using another command.`,
         );
         return;
 
       case "react":
-        await send.react(sock, msg, "⏳");
+        await send.react(sonic, msg, "⏳");
         return;
 
       case "ignore":
@@ -49,9 +49,9 @@ export const handleMessage = async (sock, msg) => {
   // console.log(`📩 ${cmdName} | ${jid.fromUser(sender)}`)
 
   try {
-    await cmd.run(sock, msg, args);
+    await cmd.run(sonic, msg, args);
   } catch (err) {
     console.error(`Error [${cmdName}]:`, err.message);
-    await send.text(sock, msg, `❌ Error: ${err.message}`);
+    await send.text(sonic, msg, `❌ Error: ${err.message}`);
   }
 };

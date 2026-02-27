@@ -146,13 +146,13 @@ export const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 export const formatCoins = (amount) => `${e.ring} ${amount.toLocaleString()}`;
 
-export const checkEconCooldown = async (sock, msg, command, duration) => {
+export const checkEconCooldown = async (sonic, msg, command, duration) => {
   const sender = msg.key.participant || msg.key.remoteJid;
   const cd = checkCommandCooldown(sender, command, duration);
 
   if (!cd.allowed) {
     await send.text(
-      sock,
+      sonic,
       msg,
       `${e.time} You can use this command again in *${formatCooldown(cd.remaining)}*`,
     );

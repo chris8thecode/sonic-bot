@@ -40,10 +40,10 @@ export default {
   cmd: ["beg"],
   desc: "Beg for coins",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    if (!(await checkEconCooldown(sock, msg, "beg", 30000))) return;
+    if (!(await checkEconCooldown(sonic, msg, "beg", 30000))) return;
 
     const success = random(1, 100) <= 60;
 
@@ -53,7 +53,7 @@ export default {
       const newBalance = addCoins(sender, earned);
 
       await send.text(
-        sock,
+        sonic,
         msg,
         `
 ${response.emoji} *${response.giver}* ${response.message}!
@@ -62,7 +62,7 @@ ${e.check} Received: ${formatCoins(earned)}
 ${e.ring} Balance: ${formatCoins(newBalance)}`.trim(),
       );
     } else {
-      await send.text(sock, msg, `${e.cross} ${randomFrom(RESPONSES.fail)}`);
+      await send.text(sonic, msg, `${e.cross} ${randomFrom(RESPONSES.fail)}`);
     }
   },
 };

@@ -6,12 +6,12 @@ export default {
   cmd: ["menu", "help", "start", "commands"],
   desc: "Show bot menu",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const { prefix: p, botName, version } = config;
     const uptime = format.uptime((Date.now() - state.startTime) / 1000);
 
     await send.text(
-      sock,
+      sonic,
       msg,
       `
 ╭━━━━━━━━━━━━━━━━━━━━━╮

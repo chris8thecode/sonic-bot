@@ -6,7 +6,7 @@ export default {
   cmd: ["inventory", "inv", "bag", "items"],
   desc: "View your inventory",
 
-  run: async (sock, msg) => {
+  run: async (sonic, msg) => {
     const target = getTarget(msg) || msg.key.participant || msg.key.remoteJid;
     const inventory = getInventory(target);
     const isSelf = target === (msg.key.participant || msg.key.remoteJid);
@@ -14,7 +14,7 @@ export default {
 
     if (!inventory.length) {
       return send.text(
-        sock,
+        sonic,
         msg,
         `${e.cross} ${isSelf ? "Your" : "Their"} inventory is empty!`,
       );
@@ -26,7 +26,7 @@ export default {
 
     if (isSelf) {
       await send.text(
-        sock,
+        sonic,
         msg,
         `
 ╭━━━ 🎒 *INVENTORY* ━━━╮
@@ -37,7 +37,7 @@ ${items}
       );
     } else {
       await send.mention(
-        sock,
+        sonic,
         msg,
         `
 ╭━━━ 🎒 *INVENTORY* ━━━╮
