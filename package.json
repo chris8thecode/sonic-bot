@@ -12,10 +12,10 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@cacheable/node-cache": "^1.7.6",
+    "@cacheable/node-cache": "^2.0.2",
     "@hapi/boom": "^10.0.1",
     "baileys": "^7.0.0-rc.9",
-    "pino": "^10.1.0",
+    "pino": "^10.3.1",
     "better-sqlite3": "^12.6.2"
   }
 }
