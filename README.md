@@ -28,11 +28,11 @@ The developers are not responsible for any misuse of sonic or any consequences a
 
 ### Technical Features
 
-- **Lightning Fast** - Optimized for speed and performance
-- **Modular Design** - Easy to extend with new commands
-- **Permission System** - Admin-only commands with proper checks
-- **Auto-Save Configuration** - Persistent settings
-- **Emoji-Rich Interface** - Beautiful, colorful responses
+- **Lightning Fast**: Optimized for speed and performance
+- **Modular Design**: Easy to extend with new commands
+- **Permission System**: Admin-only commands with proper checks
+- **Auto-Save Configuration**: Persistent settings
+- **Emoji-Rich Interface**: Beautiful, colorful responses
 
 ## Prerequisites for Local Installation
 
@@ -42,7 +42,7 @@ Before cloning and running Sonic on your laptop or computer ensure you have the 
 
 - [Node.js & npm](https://nodejs.org/) (Download the installer)
 - [Git](https://git-scm.com/download/win)
-- (Optional) [Windows Terminal](https://aka.ms/terminal) or PowerShell
+- Terminal app (built-in)
 
 ### macOS
 
@@ -90,7 +90,11 @@ Once these are installed, you can proceed to clone the repository and follow the
    ```bash
    # Sonic will create a .env file automatically
    # Or create one manually with:
+   # For Linux And Mac OS
    touch .env
+
+   # For Windows
+   > .env
    ```
 
 4. **Run sonic**
