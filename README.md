@@ -1,6 +1,6 @@
 <h1 align="center">Sonic</h1>
 
-<p align="center"> <img src="https://files.catbox.moe/zbwngg.jpeg" alt="Sonic-bot" /> </p>
+<p align="center"> <img src="https://files.catbox.moe/0acrqb.webp" alt="Sonic-bot" /> </p>
 
 <p align="center">
   <a href="https://deepwiki.com/xodo2fast4u/sonic-bot">
