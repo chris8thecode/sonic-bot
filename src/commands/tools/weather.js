@@ -6,7 +6,7 @@ export default {
   run: async ({ text }, args) => {
     if (!args.length) {
       await text(
-        `${e.error || "❌"} Please provide a location.\nExample: !weather New York`,
+        `${e.cross} Please provide a location.\nExample: !weather New York`,
       );
       return;
     }
@@ -19,14 +19,14 @@ export default {
       );
 
       if (!res.ok) {
-        await text(`${e.error || "❌"} Failed to fetch weather data.`);
+        await text(`${e.cross} Failed to fetch weather data.`);
         return;
       }
 
       const data = await res.json();
 
       if (!data?.current_condition?.[0]) {
-        await text(`${e.error || "❌"} Could not find weather data for *${location}*.`);
+        await text(`${e.cross} Could not find weather data for *${location}*.`);
         return;
       }
 
@@ -41,20 +41,32 @@ export default {
 
       const forecast = tomorrow?.hourly?.[4]
         ? {
-          condition: tomorrow.hourly[4].weatherDesc[0].value,
-          min: tomorrow.mintempC,
-          max: tomorrow.maxtempC,
-          chance: tomorrow.hourly[4].chanceofrain,
-        }
+            condition: tomorrow.hourly[4].weatherDesc[0].value,
+            min: tomorrow.mintempC,
+            max: tomorrow.maxtempC,
+            chance: tomorrow.hourly[4].chanceofrain,
+          }
         : null;
 
-      const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const weekday = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
       let dayText = "Unknown";
       let timeStr = "Unknown";
 
-      const localtime = data.time_zone?.[0]?.localtime || c.localObsDateTime || "";
+      const localtime =
+        data.time_zone?.[0]?.localtime || c.localObsDateTime || "";
       if (localtime) {
-        const [dateStr, rawTime] = localtime.replace(/(AM|PM)$/i, "").trim().split(" ");
+        const [dateStr, rawTime] = localtime
+          .replace(/(AM|PM)$/i, "")
+          .trim()
+          .split(" ");
         if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
           const [y, mo, d] = dateStr.split("-").map(Number);
           dayText = weekday[new Date(Date.UTC(y, mo - 1, d)).getUTCDay()];
@@ -91,7 +103,7 @@ export default {
 
       await text(msg);
     } catch (err) {
-      await text(`${e.error || "❌"} Error fetching weather data: ${err.message}`);
+      await text(`${e.cross} Error fetching weather data: ${err.message}`);
     }
   },
 };

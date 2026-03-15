@@ -47,6 +47,8 @@ export default {
 
 ╭━━━ ${e.tool} *TOOLS* ━━━╮
 ┃ ${p}calculate - Do maths
+┃ ${p}weather - Check the weather
+┃ ${p}search - Search the web
 ╰━━━━━━━━━━━━━━━━━━━━━╯
 
 ╭━━━ ${e.group} *GROUP* ━━━╮

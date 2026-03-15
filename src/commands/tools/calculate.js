@@ -7,7 +7,7 @@ export default {
   run: async ({ text }, args) => {
     if (!args.length) {
       await text(
-        `${e.error || "❌"} Please provide a math expression to calculate.\nExample: !calculate 2 + 2`,
+        `${e.cross} Please provide a math expression to calculate.\nExample: !calculate 2 + 2`,
       );
       return;
     }
@@ -18,22 +18,20 @@ export default {
       const sanitized = expression.replace(/[^0-9+\-*/.().\s]/g, "").trim();
 
       if (!sanitized) {
-        await text(`${e.error || "❌"} Invalid expression provided.`);
+        await text(`${e.cross} Invalid expression provided.`);
         return;
       }
 
       const result = Function('"use strict"; return (' + sanitized + ")")();
 
       if (typeof result !== "number" || isNaN(result)) {
-        await text(`${e.error || "❌"} Invalid calculation result.`);
+        await text(`${e.cross} Invalid calculation result.`);
         return;
       }
 
-      await text(`${e.success || "✅"} *${sanitized}* = *${result}*`);
+      await text(`${e.check} *${sanitized}* = *${result}*`);
     } catch (error) {
-      await text(
-        `${e.error || "❌"} Error calculating expression: ${error.message}`,
-      );
+      await text(`${e.cross} Error calculating expression: ${error.message}`);
     }
   },
 };
