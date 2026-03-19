@@ -1,13 +1,14 @@
 import { emoji as e } from "../../config/config.js";
 import { getUser, addCoins, removeCoins } from "../../database/database.js";
 import { random, formatCoins, checkEconCooldown } from "./_utils.js";
+import { getSender } from "../../utils/utils.js";
 
 export default {
   cmd: ["slots"],
   desc: "Gamble your coins (50/50)",
 
   run: async ({ text, sonic, msg }, args) => {
-    const sender = msg.key.participant || msg.key.remoteJid;
+    const sender = getSender(msg);
 
     if (!(await checkEconCooldown(sonic, msg, "slots", 10000))) return;
 
@@ -22,6 +23,8 @@ export default {
     if (bet > user.balance) {
       return text(`${e.cross} You only have ${formatCoins(user.balance)}!`);
     }
+
+    removeCoins(sender, bet);
 
     const slots = ["🍎", "🍊", "🍋", "🍇", "🍒", "💎", "7️⃣"];
     const result = [
@@ -42,18 +45,16 @@ export default {
     if (isJackpot) {
       winnings = bet * 5;
       status = `${e.rocket} JACKPOT! x5`;
+      addCoins(sender, winnings);
     } else if (isDouble) {
       winnings = bet * 2;
       status = `${e.star} Double! x2`;
+      addCoins(sender, winnings);
     } else {
-      winnings = -bet;
       status = `${e.cross} Lost!`;
     }
 
-    const newBalance =
-      winnings > 0
-        ? addCoins(sender, winnings)
-        : (removeCoins(sender, bet), getUser(sender).balance);
+    const currentBalance = getUser(sender).balance;
 
     await text(
       `
@@ -63,7 +64,7 @@ export default {
 ┃
 ┃ ${status}
 ┃ ${winnings > 0 ? `Won: ${formatCoins(winnings)}` : `Lost: ${formatCoins(bet)}`}
-┃ ${e.ring} Balance: ${formatCoins(newBalance)}
+┃ ${e.ring} Balance: ${formatCoins(currentBalance)}
 ╰━━━━━━━━━━━━━━━━━━━╯`.trim(),
     );
   },

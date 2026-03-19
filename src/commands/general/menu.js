@@ -37,7 +37,7 @@ export default {
 ┃ ${p}work - Work for coins
 ┃ ${p}beg - Beg for coins
 ┃ ${p}pay - Pay someone
-┃ ${p}gamble - Slot machine
+┃ ${p}slots - Slot machine
 ┃ ${p}deposit - To bank
 ┃ ${p}withdraw - From bank
 ┃ ${p}inventory - Your items

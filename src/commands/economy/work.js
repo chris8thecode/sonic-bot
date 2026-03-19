@@ -8,13 +8,14 @@ import {
   formatCoins,
   checkEconCooldown,
 } from "./_utils.js";
+import { getSender } from "../../utils/utils.js";
 
 export default {
   cmd: ["work", "job"],
   desc: "Work a random job for coins",
 
   run: async ({ text, sonic, msg }) => {
-    const sender = msg.key.participant || msg.key.remoteJid;
+    const sender = getSender;
 
     if (!(await checkEconCooldown(sonic, msg, "work", COOLDOWN.WORK))) return;
 

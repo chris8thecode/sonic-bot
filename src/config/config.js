@@ -3,7 +3,7 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ENV_PATH = join(__dirname, "..", ".env");
+const ENV_PATH = resolve(process.cwd(), ".env");
 
 const updateEnvFile = (key, value) => {
   const env = existsSync(ENV_PATH)
@@ -27,7 +27,7 @@ const updateEnvFile = (key, value) => {
 export const config = Object.freeze({
   prefix: process.env.PREFIX || "!",
   ownerNumber: process.env.OWNER_NUMBER || "",
-  botName: process.env.BOT_NAME || "Sonic",
+  botName: "Sonic",
   version: "1.0.0",
   authDir: "sonic_session.db",
 });

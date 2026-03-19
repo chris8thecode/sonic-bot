@@ -7,7 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --env-file=.env src/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "sonic",
+    "xodobyte",
+    "baileys",
+    "whatsapp",
+    "group engagement"
+  ],
   "author": "xodobyte",
   "license": "ISC",
   "type": "module",
@@ -16,6 +22,6 @@
     "@hapi/boom": "^10.0.1",
     "baileys": "^7.0.0-rc.9",
     "pino": "^10.3.1",
-    "better-sqlite3": "^12.6.2"
+    "better-sqlite3": "^12.8.0"
   }
 }

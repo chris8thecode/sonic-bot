@@ -5,7 +5,7 @@ export default {
   cmd: ["tagall"],
   desc: "Tag all members",
 
-  run: async (sonic, msg, args) => {
+  run: async ({ sonic, msg }, args) => {
     const meta = await checkPerms(sonic, msg, { admin: true });
     if (!meta) return;
 

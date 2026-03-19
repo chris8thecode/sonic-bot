@@ -80,8 +80,12 @@ export const getTarget = (msg) => {
 export const isOwner = (userJid) => {
   const owner = getOwner();
   if (!owner) return false;
+
   const userNum = jid.fromUser(userJid);
-  return userNum.includes(owner.replace(/[^0-9]/g, ""));
+
+  const ownerNum = owner.replace(/[^0-9]/g, "");
+
+  return userNum === ownerNum;
 };
 
 export const format = {

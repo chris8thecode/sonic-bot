@@ -12,7 +12,7 @@ export default {
 ┃ ${e.rocket} Version: ${config.version}
 ┃ ${e.info} A WhatsApp bot with economic features
 ┃ ${e.bolt} Fast, reliable & feature-rich
-┃ ${e.crown} Owner: @${config.ownerNumber}
+┃ ${e.admin} Owner: @${config.ownerNumber}
 ╰━━━━━━━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
     );
   },

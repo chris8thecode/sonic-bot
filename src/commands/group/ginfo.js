@@ -6,7 +6,7 @@ export default {
   cmd: ["ginfo"],
   desc: "Group information",
 
-  run: async (sonic, msg) => {
+  run: async ({ sonic, msg }, args) => {
     const meta = await checkPerms(sonic, msg);
     if (!meta) return;
 

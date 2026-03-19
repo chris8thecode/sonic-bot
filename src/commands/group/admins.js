@@ -5,7 +5,7 @@ export default {
   cmd: ["admins"],
   desc: "List group admins",
 
-  run: async (sonic, msg) => {
+  run: async ({ sonic, msg }, args) => {
     const meta = await checkPerms(sonic, msg);
     if (!meta) return;
 

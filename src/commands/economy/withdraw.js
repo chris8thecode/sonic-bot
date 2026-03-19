@@ -1,13 +1,14 @@
 import { emoji as e } from "../../config/config.js";
 import { getUser, withdraw } from "../../database/database.js";
 import { formatCoins } from "./_utils.js";
+import { getSender } from "../../utils/utils.js";
 
 export default {
   cmd: ["withdraw"],
   desc: "Withdraw coins from bank",
 
   run: async ({ text, msg }, args) => {
-    const sender = msg.key.participant || msg.key.remoteJid;
+    const sender = getSender(msg);
     const user = getUser(sender);
 
     const amount =

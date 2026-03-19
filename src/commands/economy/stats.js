@@ -3,15 +3,13 @@ import { getEconomyStats } from "../../database/database.js";
 import { formatCoins } from "./_utils.js";
 
 export default {
-  cmd: ["economy"],
+  cmd: ["stats"],
   desc: "View economy statistics",
 
   run: async ({ text }) => {
     const stats = getEconomyStats();
 
     await text(
-      sonic,
-      msg,
       `
 ╭━━━ 📊 *ECONOMY STATS* ━━━╮
 ┃

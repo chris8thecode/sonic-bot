@@ -5,7 +5,9 @@ import {
   randomFrom,
   formatCoins,
   checkEconCooldown,
+  getSender,
 } from "./_utils.js";
+import { getSender } from "../../utils/utils.js";
 
 const RESPONSES = {
   success: [
@@ -40,7 +42,7 @@ export default {
   desc: "Beg for coins",
 
   run: async ({ text, sonic, msg }) => {
-    const sender = msg.key.participant || msg.key.remoteJid;
+    const sender = getSender(msg);
 
     if (!(await checkEconCooldown(sonic, msg, "beg", 30000))) return;
 

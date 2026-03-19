@@ -20,7 +20,15 @@ const rl = readline.createInterface({
 });
 const ask = (q) => new Promise((r) => rl.question(q, r));
 
+let currentSocket = null;
+
 export const startSocket = async () => {
+  if (currentSocket) {
+    currentSocket.ev.removeAllListeners();
+    currentSocket.ws.close();
+    currentSocket = null;
+  }
+
   const { state, saveCreds } = await useSqliteAuthState(config.authDir);
   const { version } = await fetchLatestBaileysVersion();
 
@@ -35,11 +43,11 @@ export const startSocket = async () => {
     },
     msgRetryCounterCache: msgRetryCache,
     generateHighQualityLinkPreview: true,
-
     markOnlineOnConnect: false,
-
     getMessage: async () => undefined,
   });
+
+  currentSocket = sonic;
 
   if (!sonic.authState.creds.registered) {
     const phone = await ask("📱 Enter phone number (with country code): ");
@@ -61,7 +69,7 @@ export const startSocket = async () => {
           console.log("🔴 Logged out. Delete auth_session and restart.");
           process.exit(1);
         }
-        console.log("🔄 Reconnecting...");
+        console.log("🔄 Reconnecting");
         startSocket();
       }
 
@@ -69,7 +77,7 @@ export const startSocket = async () => {
         rl.close();
         console.log(`
 ╔══════════════════════════════════╗
-║  🦔 ${config.botName.toUpperCase()} CONNECTED! 💨
+║  🦔 ${config.botName.toUpperCase()} CONNECTED!
 ║  Prefix: ${config.prefix}
 ║  Owner: ${getOwner() || "Not set"}
 ╚══════════════════════════════════╝`);
