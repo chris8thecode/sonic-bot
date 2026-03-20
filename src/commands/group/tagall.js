@@ -1,5 +1,6 @@
 import { emoji as e } from "../../config/config.js";
-import { checkPerms, getParticipantDisplay } from "./_utils.js";
+import { checkPerms } from "./_utils.js";
+import { jid } from "../../utils/utils.js";
 
 export default {
   cmd: ["tagall"],
@@ -12,7 +13,7 @@ export default {
     const memberIds = meta.participants.map((p) => p.id);
 
     const mentions = meta.participants
-      .map((p) => `@${getParticipantDisplay(p)}`)
+      .map((p) => `@${jid.getParticipantNumber(p)}`)
       .join("\n");
 
     const text = args.length ? `${args.join(" ")}\n\n` : "";

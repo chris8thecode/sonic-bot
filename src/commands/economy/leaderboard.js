@@ -1,6 +1,7 @@
 import { emoji as e } from "../../config/config.js";
 import { getLeaderboard } from "../../database/database.js";
 import { formatCoins } from "./_utils.js";
+import { jid } from "../../utils/utils.js";
 
 export default {
   cmd: ["leaderboard", "lb"],
@@ -22,9 +23,7 @@ export default {
       })
       .join("\n");
 
-    const mentions = top.map((user) =>
-      user.id.includes("@") ? user.id : user.id + "@s.whatsapp.net",
-    );
+    const mentions = top.map((user) => jid.toUser(user.id));
 
     await mention(
       `

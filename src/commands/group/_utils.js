@@ -64,13 +64,6 @@ export const requireTarget = async (sonic, msg) => {
   return target;
 };
 
-export const getParticipantDisplay = (participant) => {
-  if (participant.phoneNumber) {
-    return jid.fromUser(participant.phoneNumber);
-  }
-  return jid.fromUser(participant.id);
-};
-
 /*
  * Factory function creates similar command handlers with different actions,
  * reducing code duplication across kick, promote, demote, and add commands.

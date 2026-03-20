@@ -1,6 +1,5 @@
 import { config, emoji as e } from "../../config/config.js";
 import { format } from "../../utils/utils.js";
-import { state } from "../../core/state.js";
 
 export default {
   cmd: ["menu", "help"],
@@ -8,7 +7,6 @@ export default {
 
   run: async ({ text }) => {
     const { prefix: p, botName, version } = config;
-    const uptime = format.uptime((Date.now() - state.startTime) / 1000);
 
     await text(
       `
@@ -16,7 +14,7 @@ export default {
 ┃  ${e.sonic} *${botName.toUpperCase()} BOT* ${e.speed}
 ┃━━━━━━━━━━━━━━━━━━━━━
 ┃ ${e.star} Version: ${version}
-┃ ${e.time} Uptime: ${uptime}
+┃ ${e.time} Uptime: ${format.getUptime()}
 ┃ ${e.bolt} Prefix: ${p}
 ╰━━━━━━━━━━━━━━━━━━━━━╯
 

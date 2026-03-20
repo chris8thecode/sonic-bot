@@ -1,4 +1,5 @@
 import { getOwner } from "../config/config.js";
+import { state } from "../core/state.js";
 
 export const jid = {
   toUser: (num) => `${num?.replace(/[^0-9]/g, "")}@s.whatsapp.net`,
@@ -89,6 +90,11 @@ export const isOwner = (userJid) => {
 };
 
 export const format = {
+  getUptime: () => {
+    const seconds = (Date.now() - state.startTime) / 1000;
+    return format.uptime(seconds);
+  },
+
   uptime: (seconds) => {
     const units = [
       [86400, "d"],

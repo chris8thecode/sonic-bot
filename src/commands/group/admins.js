@@ -1,5 +1,6 @@
 import { emoji as e } from "../../config/config.js";
-import { checkPerms, getParticipantDisplay } from "./_utils.js";
+import { checkPerms } from "./_utils.js";
+import { jid } from "../../utils/utils.js";
 
 export default {
   cmd: ["admins"],
@@ -14,7 +15,7 @@ export default {
     const text = adminList
       .map((a) => {
         const icon = a.admin === "superadmin" ? "👑" : "⭐";
-        const display = getParticipantDisplay(a);
+        const display = jid.getParticipantNumber(a);
         return `${icon} @${display}`;
       })
       .join("\n");

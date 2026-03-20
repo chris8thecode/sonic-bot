@@ -158,3 +158,51 @@ export const checkEconCooldown = async (sonic, msg, command, duration) => {
 
   return true;
 };
+
+/**
+ * Factory for bank-related actions (deposit/withdraw)
+ * @param {Function} dbFunc - The database function to call (deposit or withdraw)
+ * @param {string} sourceKey - The user property to check for 'all' (balance or bank)
+ * @param {string} title - The display title for the UI
+ */
+export const bankAction = (dbFunc, sourceKey, title) => {
+  return async ({ text, msg }, args) => {
+    const { getUser } = await import("../../database/database.js");
+    const { getSender } = await import("../../utils/utils.js");
+
+    const sender = getSender(msg);
+    const user = getUser(sender);
+
+    const amount =
+      args[0]?.toLowerCase() === "all" ? user[sourceKey] : parseInt(args[0]);
+
+    if (!amount || amount <= 0) {
+      return text(
+        `${e.cross} Provide amount! Example: !${title.toLowerCase()} 100 or !${title.toLowerCase()} all`,
+      );
+    }
+
+    const result = dbFunc(sender, amount);
+
+    if (!result.success) {
+      const errorMsg =
+        title === "DEPOSIT"
+          ? "Insufficient cash!"
+          : "Insufficient bank balance!";
+      return text(
+        `${e.cross} ${errorMsg} You have ${formatCoins(user[sourceKey])}`,
+      );
+    }
+
+    await text(
+      `
+╭━━━ 🏦 *${title}* ━━━╮
+┃
+┃ ${e.check} ${title === "DEPOSIT" ? "Deposited" : "Withdrew"}: ${formatCoins(amount)}
+┃
+┃ ${e.star} Cash: ${formatCoins(result.balance)}
+┃ ${e.bolt} Bank: ${formatCoins(result.bank)}
+╰━━━━━━━━━━━━━━━━━━━╯`.trim(),
+    );
+  };
+};

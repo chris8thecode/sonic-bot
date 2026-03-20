@@ -50,27 +50,42 @@ db.exec(`
 
 const statements = {
   getUser: db.prepare(`SELECT * FROM users WHERE id = ?`),
+
   createUser: db.prepare(`INSERT OR IGNORE INTO users (id) VALUES (?)`),
+
   updateBalance: db.prepare(
     `UPDATE users SET balance = balance + ?, total_earned = total_earned + MAX(0, ?) WHERE id = ?`,
   ),
+
   setBalance: db.prepare(`UPDATE users SET balance = ? WHERE id = ?`),
+
   getLeaderboard: db.prepare(
     `SELECT id, balance, bank, total_earned FROM users ORDER BY (balance + bank) DESC LIMIT ?`,
   ),
+
   logTransaction: db.prepare(
     `INSERT INTO transactions (from_id, to_id, amount, type) VALUES (?, ?, ?, ?)`,
   ),
+
   getInventory: db.prepare(
     `SELECT item_name, quantity FROM inventory WHERE user_id = ?`,
   ),
+
   addItem: db.prepare(
     `INSERT INTO inventory (user_id, item_name, quantity) VALUES (?, ?, ?) ON CONFLICT(user_id, item_name) DO UPDATE SET quantity = quantity + excluded.quantity`,
   ),
+
   removeItem: db.prepare(
     `UPDATE inventory SET quantity = quantity - ? WHERE user_id = ? AND item_name = ?`,
   ),
   deleteEmptyItems: db.prepare(`DELETE FROM inventory WHERE quantity <= 0`),
+
+  depositFunds: db.prepare(
+    `UPDATE users SET balance = balance - ?, bank = bank + ? WHERE id = ?`,
+  ),
+  withdrawFunds: db.prepare(
+    `UPDATE users SET balance = balance + ?, bank = bank - ? WHERE id = ?`,
+  ),
 };
 
 /*
@@ -208,9 +223,7 @@ export const deposit = (userId, amount) => {
   if (!user || user.balance < amount)
     return { success: false, reason: "insufficient" };
 
-  db.prepare(
-    `UPDATE users SET balance = balance - ?, bank = bank + ? WHERE id = ?`,
-  ).run(amount, amount, id);
+  statements.depositFunds.run(amount, amount, id);
   statements.logTransaction.run(id, null, amount, "deposit");
 
   const updated = getUser(id);
@@ -224,9 +237,7 @@ export const withdraw = (userId, amount) => {
   if (!user || user.bank < amount)
     return { success: false, reason: "insufficient" };
 
-  db.prepare(
-    `UPDATE users SET balance = balance + ?, bank = bank - ? WHERE id = ?`,
-  ).run(amount, amount, id);
+  statements.withdrawFunds.run(amount, amount, id);
   statements.logTransaction.run(null, id, amount, "withdraw");
 
   const updated = getUser(id);
@@ -249,17 +260,18 @@ export const getEconomyStats = () => {
 };
 
 /*
+ * Gracefully shuts down the database connection.
  * Database connections must be explicitly closed on process termination to flush
  * WAL checkpoints and prevent potential corruption from abrupt shutdowns.
  */
+const shutdown = () => {
+  console.log("💾 Closing database...");
+  db.close();
+  process.exit();
+};
+
 process.on("exit", () => db.close());
-process.on("SIGINT", () => {
-  db.close();
-  process.exit();
-});
-process.on("SIGTERM", () => {
-  db.close();
-  process.exit();
-});
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
 
 console.log("💾 Database initialized");
