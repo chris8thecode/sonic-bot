@@ -1,14 +1,14 @@
 import { emoji as e } from "../../config/config.js";
 import { getUser, addCoins, removeCoins } from "../../database/database.js";
 import { random, formatCoins, checkEconCooldown } from "./_utils.js";
-import { getSender } from "../../utils/utils.js";
+import { jid } from "../../utils/utils.js";
 
 export default {
   cmd: ["slots"],
   desc: "Gamble your coins (50/50)",
 
   run: async ({ text, sonic, msg }, args) => {
-    const sender = getSender(msg);
+    const sender = jid.getSender(msg);
 
     if (!(await checkEconCooldown(sonic, msg, "slots", 10000))) return;
 

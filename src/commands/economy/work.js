@@ -8,14 +8,14 @@ import {
   formatCoins,
   checkEconCooldown,
 } from "./_utils.js";
-import { getSender } from "../../utils/utils.js";
+import { jid } from "../../utils/utils.js";
 
 export default {
   cmd: ["work", "job"],
   desc: "Work a random job for coins",
 
   run: async ({ text, sonic, msg }) => {
-    const sender = getSender;
+    const sender = jid.getSender(msg);
 
     if (!(await checkEconCooldown(sonic, msg, "work", COOLDOWN.WORK))) return;
 

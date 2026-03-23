@@ -1,7 +1,7 @@
 import { emoji as e } from "../../config/config.js";
 import { send } from "../../utils/utils.js";
 import { checkCommandCooldown, formatCooldown } from "../../utils/cooldown.js";
-import { getSender } from "../../utils/utils.js";
+import { jid } from "../../utils/utils.js";
 
 export const JOBS = [
   {
@@ -144,7 +144,7 @@ export const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 export const formatCoins = (amount) => `${e.ring} ${amount.toLocaleString()}`;
 
 export const checkEconCooldown = async (sonic, msg, command, duration) => {
-  const sender = getSender(msg);
+  const sender = jid.getSender(msg);
   const cd = checkCommandCooldown(sender, command, duration);
 
   if (!cd.allowed) {

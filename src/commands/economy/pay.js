@@ -3,14 +3,14 @@ import { getTarget, jid } from "../../utils/utils.js";
 import { getUser, transferCoins } from "../../database/database.js";
 import { COOLDOWN } from "../../utils/cooldown.js";
 import { formatCoins, checkEconCooldown } from "./_utils.js";
-import { getSender } from "../../utils/utils.js";
+import { jid } from "../../utils/utils.js";
 
 export default {
   cmd: ["pay"],
   desc: "Pay coins to another user",
 
   run: async ({ mention, text, sonic, msg }, args) => {
-    const sender = getSender(msg);
+    const sender = jid.getSender(msg);
 
     if (!(await checkEconCooldown(sonic, msg, "pay", COOLDOWN.PAY))) return;
 

@@ -2,14 +2,14 @@ import { emoji as e } from "../../config/config.js";
 import { addCoins } from "../../database/database.js";
 import { COOLDOWN } from "../../utils/cooldown.js";
 import { random, formatCoins, checkEconCooldown } from "./_utils.js";
-import { getSender } from "../../core/handler.js"
+import { jid } from "../../core/handler.js"
 
 export default {
   cmd: ["daily", "claim"],
   desc: "Claim daily reward",
 
   run: async ({ text, sonic, msg }) => {
-    const sender = getSender(msg);
+    const sender = jid.getSender(msg);
 
     if (!(await checkEconCooldown(sonic, msg, "daily", COOLDOWN.DAILY))) return;
 
