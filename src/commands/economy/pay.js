@@ -3,7 +3,6 @@ import { getTarget, jid } from "../../utils/utils.js";
 import { getUser, transferCoins } from "../../database/database.js";
 import { COOLDOWN } from "../../utils/cooldown.js";
 import { formatCoins, checkEconCooldown } from "./_utils.js";
-import { jid } from "../../utils/utils.js";
 
 export default {
   cmd: ["pay"],

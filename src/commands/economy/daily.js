@@ -2,7 +2,7 @@ import { emoji as e } from "../../config/config.js";
 import { addCoins } from "../../database/database.js";
 import { COOLDOWN } from "../../utils/cooldown.js";
 import { random, formatCoins, checkEconCooldown } from "./_utils.js";
-import { jid } from "../../core/handler.js"
+import { jid } from "../../utils/utils.js"
 
 export default {
   cmd: ["daily", "claim"],
