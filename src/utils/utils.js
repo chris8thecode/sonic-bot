@@ -89,6 +89,15 @@ export const isOwner = (userJid) => {
   return userNum === ownerNum;
 };
 
+/*
+ * Resolve the sender of a message with fallback chain.
+ * jid.getSender handles LID/group logic internally, but this adds
+ * an additional fallback for edge cases where the primary method fails.
+ */
+export const resolveSender = (msg) => {
+  return jid.getSender(msg) || msg.key.participant || msg.key.remoteJid;
+};
+
 export const format = {
   getUptime: () => {
     const seconds = (Date.now() - state.startTime) / 1000;
@@ -135,4 +144,11 @@ export const send = {
     sonic.sendMessage(msg.key.remoteJid, {
       react: { text: emoji, key },
     }),
+
+  image: (sonic, msg, url, caption = "") =>
+    sonic.sendMessage(
+      msg.key.remoteJid,
+      { image: { url }, caption },
+      { quoted: msg },
+    ),
 };

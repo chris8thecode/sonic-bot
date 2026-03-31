@@ -2,6 +2,7 @@ import Database from "better-sqlite3";
 import { existsSync, mkdirSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import { jid } from "../utils/utils.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, "..", "data");
@@ -88,22 +89,8 @@ const statements = {
   ),
 };
 
-/*
- * WhatsApp changes JID formats between LID and standard at any time so
- * we normalize to just the phone number to prevent duplicate user records.
- */
-const cleanId = (userId) => {
-  if (!userId) return "";
-
-  let clean = userId.replace(/@.*/, "");
-
-  clean = clean.replace(/:\d+$/, "");
-
-  return clean;
-};
-
 export const getUser = (userId) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   if (!id) return null;
 
   statements.createUser.run(id);
@@ -119,7 +106,7 @@ export const getUser = (userId) => {
 };
 
 export const addCoins = (userId, amount) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   statements.createUser.run(id);
   statements.updateBalance.run(amount, amount, id);
 
@@ -136,7 +123,7 @@ export const addCoins = (userId, amount) => {
 };
 
 export const removeCoins = (userId, amount) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   const user = getUser(id);
 
   if (!user || user.balance < amount) return false;
@@ -148,15 +135,15 @@ export const removeCoins = (userId, amount) => {
 };
 
 export const setBalance = (userId, amount) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   statements.createUser.run(id);
   statements.setBalance.run(amount, id);
   return amount;
 };
 
 export const transferCoins = (fromId, toId, amount) => {
-  const from = cleanId(fromId);
-  const to = cleanId(toId);
+  const from = jid.fromUser(fromId);
+  const to = jid.fromUser(toId);
 
   const fromUser = getUser(from);
   if (!fromUser || fromUser.balance < amount) {
@@ -189,12 +176,12 @@ export const getLeaderboard = (limit = 10) => {
 };
 
 export const getInventory = (userId) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   return statements.getInventory.all(id);
 };
 
 export const addItem = (userId, itemName, quantity = 1) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   statements.createUser.run(id);
   statements.addItem.run(id, itemName, quantity);
 };
@@ -204,20 +191,20 @@ export const addItem = (userId, itemName, quantity = 1) => {
  * integrity and avoid constraint violations during the quantity update.
  */
 export const removeItem = (userId, itemName, quantity = 1) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   statements.removeItem.run(quantity, id, itemName);
   statements.deleteEmptyItems.run();
 };
 
 export const hasItem = (userId, itemName, quantity = 1) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   const inventory = getInventory(id);
   const item = inventory.find((i) => i.item_name === itemName);
   return item && item.quantity >= quantity;
 };
 
 export const deposit = (userId, amount) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   const user = getUser(id);
 
   if (!user || user.balance < amount)
@@ -231,7 +218,7 @@ export const deposit = (userId, amount) => {
 };
 
 export const withdraw = (userId, amount) => {
-  const id = cleanId(userId);
+  const id = jid.fromUser(userId);
   const user = getUser(id);
 
   if (!user || user.bank < amount)

@@ -1,5 +1,5 @@
 import { emoji as e } from "../../config/config.js";
-import { jid, send, getTarget } from "../../utils/utils.js";
+import { jid, send, getTarget, resolveSender } from "../../utils/utils.js";
 
 const getAdminIds = (metadata) => {
   return metadata.participants.filter((p) => p.admin).map((p) => p.id);
@@ -12,7 +12,7 @@ export const checkPerms = async (
 ) => {
   const groupJid = msg.key.remoteJid;
 
-  const sender = jid.getSender(msg) || msg.key.participant || msg.key.remoteJid;
+  const sender = resolveSender(msg);
 
   if (!jid.isGroup(groupJid)) {
     await send.text(sonic, msg, `${e.cross} Group command only!`);

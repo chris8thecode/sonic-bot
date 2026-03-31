@@ -1,16 +1,19 @@
 import { emoji as e } from "../../config/config.js";
 import { jid, getTarget } from "../../utils/utils.js";
 import { getInventory } from "../../database/database.js";
+import { sendProfileDisplay } from "./_utils.js";
 
 export default {
   cmd: ["inventory", "inv"],
   desc: "View your inventory",
 
-  run: async ({ text, mention, msg }) => {
+  run: async (helpers) => {
+    const { text, msg } = helpers;
     const target = getTarget(msg) || msg.key.participant || msg.key.remoteJid;
     const inventory = getInventory(target);
-    const isSelf = target === (msg.key.participant || msg.key.remoteJid);
     const num = jid.fromUser(target);
+    const ownerJid = msg.key.participant || msg.key.remoteJid;
+    const isSelf = target === ownerJid;
 
     if (!inventory.length) {
       return text(
@@ -22,25 +25,20 @@ export default {
       .map((i) => `┃ • ${i.item_name} x${i.quantity}`)
       .join("\n");
 
-    if (isSelf) {
-      await text(
-        `
+    const selfContent = `
 ╭━━━ 🎒 *INVENTORY* ━━━╮
 ┃ ${e.user} Your items:
 ┃
 ${items}
-╰━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
-      );
-    } else {
-      await mention(
-        `
+╰━━━━━━━━━━━━━━━━━━━━━╯`.trim();
+
+    const otherContent = `
 ╭━━━ 🎒 *INVENTORY* ━━━╮
 ┃ ${e.user} @${num}'s items:
 ┃
 ${items}
-╰━━━━━━━━━━━━━━━━━━━━━╯`.trim(),
-        [target],
-      );
-    }
+╰━━━━━━━━━━━━━━━━━━━━━╯`.trim();
+
+    await sendProfileDisplay(helpers, target, selfContent, otherContent);
   },
 };

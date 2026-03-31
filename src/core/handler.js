@@ -1,6 +1,6 @@
 import { config, emoji as e } from "../config/config.js";
 import { commands } from "../commands/index.js";
-import { getText, send, jid } from "../utils/utils.js";
+import { getText, send, jid, resolveSender } from "../utils/utils.js";
 import { checkGlobalCooldown, formatCooldown } from "../utils/cooldown.js";
 
 export const handleMessage = async (sonic, msg) => {
@@ -17,7 +17,7 @@ export const handleMessage = async (sonic, msg) => {
 
   if (!cmd) return;
 
-  const sender = jid.getSender(msg) || msg.key.participant || msg.key.remoteJid;
+  const sender = resolveSender(msg);
 
   const cooldown = checkGlobalCooldown(sender);
 
@@ -53,6 +53,7 @@ export const handleMessage = async (sonic, msg) => {
     mention: (text, mentions) => send.mention(sonic, msg, text, mentions),
     react: (emoji, key) => send.react(sonic, msg, emoji, key),
     edit: (key, text) => send.edit(sonic, msg, key, text),
+    image: (url, caption) => send.image(sonic, msg, url, caption),
     sonic,
     msg,
   };

@@ -5,7 +5,7 @@ export default {
   cmd: ["leave"],
   desc: "Leave group",
 
-  run: async (sonic, msg) => {
+  run: async ({ sonic, msg }, args) => {
     if (!jid.isGroup(msg.key.remoteJid)) {
       return send.text(sonic, msg, `${e.cross} Group only!`);
     }

@@ -1,7 +1,7 @@
 import { emoji as e } from "../../config/config.js";
-import { send } from "../../utils/utils.js";
+import { send, jid } from "../../utils/utils.js";
 import { checkCommandCooldown, formatCooldown } from "../../utils/cooldown.js";
-import { jid } from "../../utils/utils.js";
+import { getUser } from "../../database/database.js";
 
 export const JOBS = [
   {
@@ -160,6 +160,29 @@ export const checkEconCooldown = async (sonic, msg, command, duration) => {
 };
 
 /**
+ * Helper to display profile/wallet information with automatic mention handling
+ * @param {Object} helpers - Command helpers (text, mention, msg)
+ * @param {string} target - The user JID to display
+ * @param {string} selfContent - Content to show when viewing own profile
+ * @param {string} otherContent - Content to show when viewing someone else's profile
+ */
+export const sendProfileDisplay = async (
+  { text, mention, msg },
+  target,
+  selfContent,
+  otherContent,
+) => {
+  const ownerJid = msg.key.participant || msg.key.remoteJid;
+  const isSelf = target === ownerJid;
+
+  if (isSelf) {
+    return text(selfContent);
+  } else {
+    return mention(otherContent, [target]);
+  }
+};
+
+/**
  * Factory for bank-related actions (deposit/withdraw)
  * @param {Function} dbFunc - The database function to call (deposit or withdraw)
  * @param {string} sourceKey - The user property to check for 'all' (balance or bank)
@@ -167,10 +190,7 @@ export const checkEconCooldown = async (sonic, msg, command, duration) => {
  */
 export const bankAction = (dbFunc, sourceKey, title) => {
   return async ({ text, msg }, args) => {
-    const { getUser } = await import("../../database/database.js");
-    const { getSender } = await import("../../utils/utils.js");
-
-    const sender = getSender(msg);
+    const sender = jid.getSender(msg);
     const user = getUser(sender);
 
     const amount =
