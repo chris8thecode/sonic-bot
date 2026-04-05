@@ -12,17 +12,33 @@ export default {
     }
 
     const query = args.join(" ");
+    const encoded = encodeURIComponent(query);
 
     try {
       await react("🔍");
 
+      const pageRes = await fetch(`https://duckduckgo.com/?q=${encoded}`);
+      const pageText = await pageRes.text();
+      const vqdMatch = pageText.match(/vqd=["']([^"']+)["']/);
+
+      if (!vqdMatch) {
+        await text(`${e.cross} Could not initialize image search.`);
+        return;
+      }
+
+      const vqd = vqdMatch[1];
+
       const res = await fetch(
-        `https://duckduckgo.com/i.js?q=${encodeURIComponent(query)}`,
-        { headers: { "User-Agent": "Mozilla/5.0" } },
+        `https://duckduckgo.com/i.js?q=${encoded}&o=json&vqd=${vqd}`,
+        {
+          headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+          },
+        },
       );
 
       if (!res.ok) {
-        await text(`${e.cross} Failed to reach image search.`);
+        await text(`${e.cross} Failed to fetch image results.`);
         return;
       }
 
@@ -33,7 +49,18 @@ export default {
         return;
       }
 
-      await image(data.results[0].image, `${e.check} Result for: *${query}*`);
+      let imageUrl = data.results[0].image || data.results[0].url;
+
+      if (!imageUrl) {
+        await text(`${e.cross} Could not extract image URL.`);
+        return;
+      }
+
+      if (!imageUrl.startsWith("http")) {
+        imageUrl = `https://${imageUrl}`;
+      }
+
+      await image(imageUrl, `🖼️ Result for: *${query}*`);
     } catch (err) {
       await text(`${e.cross} Error fetching image: ${err.message}`);
     }
